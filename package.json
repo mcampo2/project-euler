@@ -1,0 +1,14 @@
+{
+  "name": "project-euler",
+  "version": "1.0.0",
+  "description": "General solutions for projecteuler.net",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
