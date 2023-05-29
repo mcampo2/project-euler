@@ -4,7 +4,7 @@
   "description": "General solutions for projecteuler.net",
   "main": "index.js",
   "scripts": {
-    "start": "serve ."
+    "start": "serve"
   },
   "author": "",
   "license": "ISC",
