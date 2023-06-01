@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Even Fibonacci Numbers</title>
+    <style>
+        #range {
+            width: 3.5rem;
+        }
+    </style>
 </head>
 <body>
     <h1>Even Fibonacci Numbers</h1>
@@ -19,8 +24,33 @@
     </div>
     <div>
         <h2>Solution</h2>
-        <p>TODO</p>
+        <p>The sum of the even-valued Fibonacci terms whose value do not exceed
+           <input id="range" type="text" value="4000000"> is
+           <b><span id="solution">???</span></b></p></p>
         <button id="solve">Solve</button>
     </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            fib_1 = 1;
+            fib_2 = 1;
+
+            while(fib_1 <= range) {
+                temp = fib_2;
+                fib_2 = fib_2 + fib_1;
+                fib_1 = temp;
+
+                if(fib_2 % 2 == 0) {
+                    answer += fib_2;
+                }
+            }
+
+
+            document.getElementById("solution").textContent = answer;
+        }
+        document.getElementById("solve").onclick = solve;
+    </script>
 </body>
 </html>
