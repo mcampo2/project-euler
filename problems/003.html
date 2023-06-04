@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Largest Prime Factor</title>
+    <style>
+        #range {
+            width: 6rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Largest Prime Factor</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The prime factors of 13195 are 5, 7, 13, and 29.</p>
+        <p>What is the largest prime factor of the number 600851475143?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The largest prime factor of <input id="range" type="text" value="600851475143"> is
+            <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = 'TODO';
+        }
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
