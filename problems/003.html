@@ -29,7 +29,18 @@
             answer = 0;
             range = document.getElementById("range").value;
             
-            document.getElementById("solution").textContent = 'TODO';
+            while(answer < Math.sqrt(range)) {
+                answer = range; // default case
+                for(i = 2; i <= Math.sqrt(range); i++) {
+                    if(range % i == 0) { // we found a prime factor
+                        answer = i;
+                        range = range / i;
+                        break;
+                    } // else answer == range
+                }
+            }
+
+            document.getElementById("solution").textContent = range;
         }
         document.getElementById("solve").onclick = solve;
     </script>
