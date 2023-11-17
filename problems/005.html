@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smallest Multiple</title>
+    <style>
+        #range {
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Template</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>2520 is the smallest number that can be divided by each of the
+           numbers from 1 to 10 without any remainder.</p>
+        <p>What is the smallest positive number that is evenly divisible by all
+           the numbers from 1 to 20?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The smallest positive number that is evenly divisible by all the
+            numbers from 1 to <input id="range" type="text" value="20"> is
+            <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
