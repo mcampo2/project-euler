@@ -31,9 +31,30 @@
         function solve() {
             answer = 0;
             range = document.getElementById("range").value;
-            
+            range = (range + '')[0] // get first number of range for performance
+
+            if(isNaN(range)) return; // check that range is a number
+            range = '9'.repeat(range); // convert range to 9s
+
+            for(let i = 1; i <= range; i++) {
+                for(let j = 1; j <= range; j++) {
+                    if(isPalindrome(i*j) && (i*j > answer)) // check for largest palindrome
+                        answer = i * j;
+                }
+            }
+
             document.getElementById("solution").textContent = answer;
         }
+
+        function isPalindrome(word) {
+            word = word + ''; // convert word to string
+            while(word.length > 1) { // if length <= 1, is palindrome
+                if(word[0] == word[word.length-1]) // check if first and last match
+                    word = word.substring(1, word.length-1); // if so, shorten word
+                else return false; // else, is not palindrome
+            } return true; // if end of loop reached, it is a palindrome
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
