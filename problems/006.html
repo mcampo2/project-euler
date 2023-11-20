@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum Square Difference</title>
+    <style>
+        #range {
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sum Square Difference</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The sum of the squares of the first ten natural numbers is,</p>
+        <p>1<sup>2</sup> + 2<sup>2</sup> + ... + 10<sup>2</sup> = 385.</p>
+        <p>The square of the sum of the first ten natural numbers is,</p>
+        <p>(1 + 2 + ... + 10)<sup>2</sup> = 55<sup>2</sup> = 3025.</p>
+        <p>Hence the difference between the sum of the squares of the first ten
+           natural numbers and the square of the sum is 3025 - 385 = 2640</p>
+        <p>Find the difference between the sum of the squares of the first one
+           hundred natural numbers and the square of the sum.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The difference between the sum of the squares of the first
+           <input id="range" type="text" value="0"> natural numbers and the
+           square of the sum is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
