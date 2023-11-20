@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smallest Multiple</title>
     <style>
-        #range {
+        #start, #end {
             width: 2rem;
         }
     </style>
@@ -23,14 +23,25 @@
     <div>
         <h2>Solution</h2>
         <p>The smallest positive number that is evenly divisible by all the
-            numbers from 1 to <input id="range" type="text" value="20"> is
+            numbers from <input id="start" type="text" value="1"> to
+            <input id="end" type="text" value="20"> is
             <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
             answer = 0;
-            range = document.getElementById("range").value;
+            start = document.getElementById("start").value;
+            end = document.getElementById("end").value;
+
+            trial = 1
+            while(answer == 0) {
+                for(let i = start; i <= end; i++) {
+                    if(trial%i != 0) break;  // not divisible
+                    if(i == end) answer = trial; // divisible by all!
+                } trial++;
+                if(trial >= 1000000000) break; // set limit to a billion
+            }
             
             document.getElementById("solution").textContent = answer;
         }
