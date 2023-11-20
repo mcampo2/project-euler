@@ -1,6 +1,8 @@
 # Project Euler
 General solutions for the first 100 problems of projecteuler.net
 
+**Live Version [here](https://htmlpreview.github.io/?https://github.com/mcampo2/project-euler/blob/master/index.html).**
+
 If I do manage to get to 100, I will fork this into my private GitLab as posting solutions past the first 100 problems is against the rules.
 
 # Message received after first submission
