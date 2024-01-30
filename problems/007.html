@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10001st Prime</title>
+    <style>
+        #range {
+            width: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>10001st Prime</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13 , we
+           can see that the 6th prime is 13.</p>
+        <p>What is the 10001st prime number?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The <input id="range" type="text" value="10001">
+           <span id="suffix">st</span> prime number is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        // let's have the suffix match the range
+        document.getElementById("range").oninput = function(e) {
+            val = document.getElementById("range").value
+            if(val%10==1)
+                document.getElementById("suffix").innerHTML = "st"
+            else if(val%10==2)
+                document.getElementById("suffix").innerHTML = "nd"
+            else if(val%10==3)
+                document.getElementById("suffix").innerHTML = "rd"
+            else
+                document.getElementById("suffix").innerHTML = "th"
+        }
+
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
