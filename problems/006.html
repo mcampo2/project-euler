@@ -27,7 +27,7 @@
     <div>
         <h2>Solution</h2>
         <p>The difference between the sum of the squares of the first
-           <input id="range" type="text" value="0"> natural numbers and the
+           <input id="range" type="text" value="100"> natural numbers and the
            square of the sum is <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
@@ -35,6 +35,16 @@
         function solve() {
             answer = 0;
             range = document.getElementById("range").value;
+            sumOfSquares = 0;
+            squareOfSums = 0;
+
+            // Calculate sumOfSquares and squareOfSums
+            for(i = 1; i <= range; i++) {
+                sumOfSquares = sumOfSquares + i ** 2
+                squareOfSums = squareOfSums + i
+            } squareOfSums = squareOfSums ** 2
+            // find difference of sumOfSquares and squareOfSums
+            answer = squareOfSums - sumOfSquares
             
             document.getElementById("solution").textContent = answer;
         }
