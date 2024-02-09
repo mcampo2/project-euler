@@ -40,9 +40,22 @@
                 document.getElementById("suffix").innerHTML = "th"
         }
 
+        function isPrime(number) {
+            for(var i=2; i<=(number**0.5); i++) {
+                if(number%i == 0) return false;
+            } return true;
+        }
+
         function solve() {
             answer = 0;
             range = document.getElementById("range").value;
+            nubmerOfPrimes = 0;
+
+            // find nth prime
+            for(var i=2; nubmerOfPrimes<range; i++) {
+                if(isPrime(i)) nubmerOfPrimes++;
+                if(nubmerOfPrimes==range) answer = i;
+            }
 
             document.getElementById("solution").textContent = answer;
         }
