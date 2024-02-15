@@ -16,7 +16,7 @@
     <div>
         <h2>Problem</h2>
         <p>The four adjacent digits in the 1000-digit number that have the
-           greatest product are 9 x 9 x 8 x9 = 5832.</p>
+           greatest product are 9 x 9 x 8 x 9 = 5832.</p>
         <p id="number">73167176531330624919225119674426574742355349194934<br/>
            96983520312774506326239578318016984801869478851843<br/>
            85861560789112949495459501737958331952853208805511<br/>
@@ -48,8 +48,8 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = document.getElementById("range").value;
+            answer = 0;
 
             // get number string to search
             number = document.getElementById("number").innerText;
@@ -57,8 +57,20 @@
             number = number.replace(/\s/g,'')
 
             // find adjacent digits with largest project
-            // write code here
-            
+            for(i = 0; i <= number.length - range; i++)
+            {
+                // find product
+                product = 1;
+                current = number.substring(i, i+parseInt(range))
+                current.split('').forEach(element => {
+                    product *= element
+                });
+                // check if largest product
+                if(product > answer) {
+                    answer = product
+                }
+            }
+
             document.getElementById("solution").textContent = answer;
         }
         document.getElementById("solve").onclick = solve;
