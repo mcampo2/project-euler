@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summation of Primes</title>
+    <style>
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Summation of Primes</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.</p>
+        <p>Find the sum of all the primes below two million.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The sum of all primes below
+            <input id="range" type="text" value="2000000"> is
+            <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
