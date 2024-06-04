@@ -13,6 +13,11 @@
         .red {
             color: red;
         }
+
+        .blue {
+            color: blue;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -51,21 +56,100 @@
     </div>
     <div>
         <h2>Solution</h2>
-        <p>The answer for <input id="range" type="text" value="0"> is
-            <b><span id="solution">???</span></b>.</p>
+        <p>The largest sum of <input id="range" type="text" value="4"> adjacent
+            numbers is <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
-            answer = 0;
-            range = document.getElementById("range").value;
+            max = 0;
+            var answer = [];
+            range = parseInt(document.getElementById("range").value);
 
-            // read grid from document
-            grid = document.getElementById("grid").innerText.split('\n');
-            grid = grid.map(element => element.split(' '));
+            // create grid variable
+            var grid = document.getElementById("grid"); // get grid
+            grid = grid.innerHTML.split('<br>'); // split rows
+            for(var row = 0; row < grid.length; row++) { // split columns
+                grid[row] = grid[row].match(/(\d+|<[^>]+>.*?<\/[^>]+>)/g);
+                for(var col = 0; col < grid[row].length; col++) {
+                    grid[row][col] = parseInt(grid[row][col]); // convert to int
+                }
+            }
 
-            document.getElementById("solution").textContent = answer;
+            for(var row = 0; row < grid.length; row++) {
+                for(var col = 0; col < grid[row].length; col++) {
+                    // right
+                    test = [];
+                    for(var position = 0; position < range; position++) {
+                        test.push([row + position, col]);
+                    }
+                    if(sum(test) > max) {
+                        max = sum(test)
+                        answer = test;
+                    }
+                    // down
+                    test = [];
+                    for(var position = 0; position < range; position++) {
+                        test.push([row, col + position]);
+                    }
+                    if(sum(test) > max) {
+                        max = sum(test)
+                        answer = test;
+                    }
+                    // diagonal-right
+                    test = [];
+                    for(var position = 0; position < range; position++) {
+                        test.push([row + position, col + position]);
+                    }
+                    if(sum(test) > max) {
+                        max = sum(test)
+                        answer = test;
+                    }
+                    // diagonal-left
+                    test = [];
+                    for(var position = 0; position < range; position++) {
+                        test.push([row + position, col - position]);
+                    }
+                    if(sum(test) > max) {
+                        max = sum(test)
+                        answer = test;
+                    }
+                }
+            }
+
+            // highlight answer
+            for(element in answer)
+                highlight(answer[element][0], answer[element][1]);
+            document.getElementById("solution").textContent = max;
         }
+
+        function sum(values) {
+            var sum = 1;
+            for(var value in values) {
+                x = values[value][0];
+                y = values[value][1];
+                sum *= get(x, y);
+            }
+            return sum;
+        }
+
+        function get(x, y) {
+            grid = document.getElementById("grid");
+            rows = grid.innerHTML.split('<br>');
+            if(rows[y]==undefined) return undefined;
+            value =  parseInt(rows[y].match(/(\d+|<[^>]+>.*?<\/[^>]+>)/g)[x]);
+            return(value);
+        }
+
+        function highlight(x, y) {
+            var grid = document.getElementById("grid");
+            rows = grid.innerHTML.split('<br>');
+            columns = rows[y].match(/(\d+|<[^>]+>.*?<\/[^>]+>)/g);
+            columns[x] = `<span class="blue">${columns[x]}</span>`;
+            rows[y] = columns.join(' ');
+            grid.innerHTML = rows.join('<br>');
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
