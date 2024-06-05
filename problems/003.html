@@ -42,6 +42,13 @@
 
             document.getElementById("solution").textContent = range;
         }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {solve()}
+            }
+        );
+        
         document.getElementById("solve").onclick = solve;
     </script>
 </body>

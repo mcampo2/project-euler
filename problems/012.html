@@ -63,6 +63,13 @@
             
             document.getElementById("solution").textContent = triangle_value;
         }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {solve()}
+            }
+        );
+        
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
