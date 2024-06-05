@@ -39,10 +39,29 @@
     </div>
     <script>
         function solve() {
-            answer = "TBD";
+            triangle_value = 0;
+            num_divisors = 0;
             range = document.getElementById("range").value;
+
+            // find first triangle number with num_divisors > range
+            for(triangle_index = 1; num_divisors <= range; triangle_index++) {
+                num_divisors = 0;
+                triangle_value = 0;
+                // calculate triangle number
+                for(index = 1; index <= triangle_index; index++) {
+                    triangle_value += index;
+                }
+                // calculate number of divisors
+                for(index = 1; index <= Math.sqrt(triangle_value); index++) {
+                    // if index is a factor, add 2 to num_divisors
+                    if (triangle_value % index == 0) {
+                        num_divisors+=2;
+                    }
+                } // triangle '1' is a special case
+                if(triangle_value == 1) num_divisors = 1;
+            }
             
-            document.getElementById("solution").textContent = answer;
+            document.getElementById("solution").textContent = triangle_value;
         }
         document.getElementById("solve").onclick = solve;
     </script>
