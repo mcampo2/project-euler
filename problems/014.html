@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longest Collatz Sequence</title>
+    <style>
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Longest Collatz Sequence</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The following iterative sequence is defined for the set of positive integers:</p>
+        <p>n &#x2192; n/2 (n is even)</br>
+            n &#x2192; 3n + 1 (n is odd)</p>
+        <p>Using the rule above and starting with 13, we generate the following sequence:</p>
+        <p>13 &#x2192; 40 &#x2192; 20 &#x2192; 10 &#x2192; 5 &#x2192; 16 &#x2192; 8 &#x2192; 4 &#x2192; 2 &#x2192; 1</p>
+        <p>It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms.</br>
+            Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.</p>
+        <p>Which starting number, under one million, produces the longest chain?</p>
+        <p>NOTE: Once the chain starts the terms are allowed to go above one million.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The longest Collatz sequence with a starting number under
+            <input id="range" type="text" value="1000000"> is
+            <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = "TBD";
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {solve()}
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
