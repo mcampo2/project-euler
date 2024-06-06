@@ -120,21 +120,31 @@
     </div>
     <div>
         <h2>Solution</h2>
-        <p>The answer for <input id="range" type="text" value="0"> is
-            <b><span id="solution">???</span></b>.</p>
+        <p>The first <input id="range" type="text" value="10"> digits of the sum
+            is <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
             answer = 0;
-            range = document.getElementById("range").value;
+            range = parseInt(document.getElementById("range").value);
 
             // read the one-hundred numbers
             numbers = document.getElementById("numbers")
             numbers = numbers.textContent.split("\n");
+            numbers = numbers.map(function(number) {
+                return parseInt(number);
+            });
 
-            console.log(numbers[1]);
-            
+            // get sum
+            numbers.forEach(element => {
+                answer +=element;
+            });
+
+            // get first n digits
+            answer = answer.toString().slice(0, 1) +
+                answer.toString().slice(2, range+1);
+
             document.getElementById("solution").textContent = answer;
         }
 
