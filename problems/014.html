@@ -34,10 +34,38 @@
     </div>
     <script>
         function solve() {
-            answer = "TBD";
+            answer = 0;
+            length = 0;
             range = document.getElementById("range").value;
+
+            // Check all numbers under the range
+            for(i = 1; i < range; i++) {
+                count = collatz_count(i);
+                console.log(i + ": " + count);
+                if(count > length) {
+                    length = count;
+                    answer = i;
+                }
+            }
             
             document.getElementById("solution").textContent = answer;
+        }
+
+        function next_collatz(number) {
+            if(number % 2 == 0) {
+                return number / 2;
+            } else {
+                return 3 * number + 1;
+            }
+        }
+
+        function collatz_count(number) {
+            count = 1;
+            while(number != 1) {
+                number = next_collatz(number);
+                count++;
+            }
+            return count;
         }
 
         document.getElementById("range").addEventListener("keydown",
