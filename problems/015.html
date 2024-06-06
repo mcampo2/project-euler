@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lattice Paths</title>
+    <style>
+        #range_1, #range_2 {
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lattice Paths</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Starting in the top left corner of a 2 X 2 grid, and only being able
+            to move </br> to the right and down, there are exactly 6 routes to the
+            bottom right corner.</p>
+        <p>How many such routes are there through a 20 X 20 grid?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>A <input id="range_1" type="text" value="20"> X
+            <input id="range_2" type="text" value="20"> grid contains
+            <b><span id="solution">???</span></b> routes.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = "TBD";
+            range_1 = document.getElementById("range_1").value;
+            range_2 = document.getElementById("range_2").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range_2").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {solve()}
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
