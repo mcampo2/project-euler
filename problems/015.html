@@ -42,6 +42,8 @@
             document.getElementById("solution").textContent = answer;
         }
 
+        // see https://en.wikipedia.org/wiki/Lattice_path
+        // and https://en.wikipedia.org/wiki/Permutation
         function getNumPaths(x, y, range_1, range_2) {
             return factorial(range_1+range_2) /
                 factorial(range_1) /
