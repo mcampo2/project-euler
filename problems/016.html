@@ -31,7 +31,14 @@
     <script>
         function solve() {
             answer = 0;
-            range = document.getElementById("range").value;
+            range = parseInt(document.getElementById("range").value);
+
+            if(isNaN(range)) range = 0;
+            exponent = "" + BigInt(2)**BigInt(range);
+            
+            for (let i = 0; i < exponent.length; i++) {
+                answer += parseInt(exponent[i]);
+            }
             
             document.getElementById("solution").textContent = answer;
         }
