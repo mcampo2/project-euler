@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Letter Counts</title>
+    <style>
+        #range_1 {
+            width: 2rem;
+        }
+
+        #range_2 {
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Letter Counts</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>If the numbers 1 to 5 are written out in words: one, two, three, 
+           four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in 
+           total.</p>
+        <p>If all the numbers from 1 to 1000 (one thousand) inclusive were 
+           written out in words, how many letters would be used?</p>
+        <p><b>NOTE:</b> Do not count spaces or hyphens. For example, 342 (three 
+           hundred and forty-two) contains 23 letters and 115 <br> (one hundred 
+           and fifteen) contains 20 letters. The use of "and" when writing out 
+           numbers is in compliance with British usage.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The total number of letters used for the numbers 
+           <input id="range_1" type="text" value="1"> to 
+           <input id="range_2" type="text" value="1000"> written out in words 
+           is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range_1 = parseInt(document.getElementById("range_1").value);
+            range_2 = parseInt(document.getElementById("range_2").value);
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range_1").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("range_2").focus();
+                }
+            }
+        );
+
+        document.getElementById("range_2").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
