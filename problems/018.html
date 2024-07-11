@@ -9,6 +9,11 @@
         .red {
             color: #a00;
         }
+
+        .blue {
+            color: #00a;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body style="max-width: 600px;">
@@ -58,9 +63,39 @@
             range = document.getElementById("range").innerText.split('\n');
             range = range.map(row => row.split(' ').map(Number));
 
-            console.log(range);
-            
+            answer = get_max_path(range);
+
             document.getElementById("solution").textContent = answer;
+        }
+
+        function get_max_path(triangle) {
+            for (let i = triangle.length - 2; i >= 0; i--) {
+                for (let j = 0; j < triangle[i].length; j++) {
+                    triangle[i][j] += Math.max(triangle[i + 1][j], triangle[i + 1][j + 1]);
+                }
+            } 
+
+            highlight_triangle(triangle, 0, 0);
+            return triangle[0][0];
+        }
+
+        function highlight_triangle(triangle, x, y) {
+            highlight(x, y);
+            if (y < triangle.length - 1) {
+                if (triangle[y+1][x] > triangle[y+1][x+1])
+                    highlight_triangle(triangle, x, y + 1);
+                else
+                    highlight_triangle(triangle, x + 1, y + 1);
+            }
+        }
+
+        function highlight(x, y) {
+            var grid = document.getElementById("range");
+            rows = grid.innerHTML.split('<br>');
+            columns = rows[y].match(/(\d+|<[^>]+>.*?<\/[^>]+>)/g);
+            columns[x] = `<span class="blue">${columns[x]}</span>`;
+            rows[y] = columns.join(' ');
+            grid.innerHTML = rows.join('<br>');
         }
         
         document.getElementById("solve").onclick = solve;
