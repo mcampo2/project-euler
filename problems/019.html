@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Sundays</title>
+    <style>
+        #range_1 {
+            width: 6.5rem;
+        }
+
+        #range_2 {
+            width: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Counting Sundays</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>You are given the following information, but you may prefer to do 
+           some research for yourself.</p>
+        <ul>
+            <li>1 Jan 1900 was a Monday.</li>
+            <li>Thirty days has September,<br>
+            April, June and November.<br>
+            All the rest have thirty-one,<br>
+            Saving February alone,<br>
+            Which has twenty-eight, rain or shine.<br>
+            And on leap years, twenty-nine.</li>
+            <li>A leap year occurs on any year evenly divisible by 4, but not 
+                on a century unless it is divisible by 400.</li>
+        </ul>
+        <p>How many Sundays fell on the first of the month during the twentieth 
+           century (1 Jan 1901 to 31 Dec 2000)?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The number of 
+            <select id="range_1" value="0">
+                <option value="0">Sundays</option>
+                <option value="1">Mondays</option>
+                <option value="2">Tuesdays</option>
+                <option value="3">Wednesdays</option>
+                <option value="4">Thursdays</option>
+                <option value="5">Fridays</option>
+                <option value="6">Saturdays</option>
+            </select> that fell on the first of the month during the 
+            <input id="range_2" type="text" value="20">
+            <span id="suffix">th</span> century is 
+            <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range_1 = document.getElementById("range_1").value;
+            range_2 = document.getElementById("range_2").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        // make the suffix match the range
+        document.getElementById("range_2").oninput = function(e) {
+            val = document.getElementById("range_2").value
+            if(val%10==1)
+                document.getElementById("suffix").innerHTML = "st"
+            else if(val%10==2)
+                document.getElementById("suffix").innerHTML = "nd"
+            else if(val%10==3)
+                document.getElementById("suffix").innerHTML = "rd"
+            else
+                document.getElementById("suffix").innerHTML = "th"
+        }
+        
+        document.getElementById("range_1").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("range_2").focus();
+                }
+            }
+        );
+
+        document.getElementById("range_2").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
