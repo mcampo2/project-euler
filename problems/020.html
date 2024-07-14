@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial Digit Sum</title>
+    <style>
+        #range {
+            width: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Template</h1>
+    <div>
+        <h2>Factorial Digit Sum</h2>
+        <p>n! means n x (n - 1) x ... x 3 x 2 x 1</p>
+        <p>For example, 10! = 10 x 9 x ... x 3 x 2 x 1 = 3628800, <br>
+            and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+        </p>
+        <p>Find the sum of the digits in the number 100!.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The sum of the digits in the number
+           <input id="range" type="text" value="100">! is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
