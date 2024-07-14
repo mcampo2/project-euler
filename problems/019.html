@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Counting Sundays</title>
     <style>
-        #range_1 {
+        #day_of_week {
             width: 6.5rem;
         }
 
-        #range_2 {
+        #century {
             width: 1rem;
         }
     </style>
@@ -38,7 +38,7 @@
     <div>
         <h2>Solution</h2>
         <p>The number of 
-            <select id="range_1" value="0">
+            <select id="day_of_week" value="0">
                 <option value="0">Sundays</option>
                 <option value="1">Mondays</option>
                 <option value="2">Tuesdays</option>
@@ -47,24 +47,95 @@
                 <option value="5">Fridays</option>
                 <option value="6">Saturdays</option>
             </select> that fell on the first of the month during the 
-            <input id="range_2" type="text" value="20">
+            <input id="century" type="text" value="20">
             <span id="suffix">th</span> century is 
             <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
     <script>
+        days_week = ["Sunday", "Monday", "Tuesday",
+            "Wednesday", "Thursday", "Friday", "Saturday"];
+        // Thirty days has September,
+        // April, June and November.
+        // All the rest have thirty-one,
+        // Saving February alone,
+        // Which has twenty-eight, rain or shine.
+        days_month = [31, 28 , 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        // And on leap years, twenty-nine.
+        leap_days_month = [31, 29 , 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        // A leap year occurs on any year evenly divisible by 4, but not on
+        // a century unless it is divisible by 400.
+        function isLeapYear(year) {
+            if(year%4==0) {
+                if(year%100==0) {
+                    if(year%400==0) {
+                        return true;
+                    } return false;
+                } return true;
+            } return false;
+        }
+
         function solve() {
-            answer = 0;
-            range_1 = document.getElementById("range_1").value;
-            range_2 = document.getElementById("range_2").value;
+            // 1 Jan 1900 was a Monday.
+            reference_day = 1;
+            reference_week = 1;
+            reference_month = 1;
+            reference_year = 1900;
+            // google says every 400 years the day of the week is the same
+            reference_year = reference_year % 400;
             
+            answer = 0;
+            day_of_week = document.getElementById("day_of_week").value;
+            century = document.getElementById("century").value;
+            end_year = (century * 100) % 400 + 1;
+            start_year = end_year - 100;
+            
+            // make sure end_year > start_year > reference_year
+            if (start_year < reference_year) start_year = start_year + 400;
+            if (end_year < start_year) end_year = end_year + 400;
+
+            // make reference_year match the current year
+            while(reference_year < start_year) {
+                reference_day++;
+                if(days_month[reference_month-1] < reference_day) {
+                    reference_day = 1;
+                    reference_month++;
+                }
+                if(reference_month > 12) {
+                    reference_month = 1;
+                    reference_year++;
+                }
+                reference_week++;
+                if(reference_week >= 7) reference_week = 0;
+            }
+
+            // count the number of day_of_week that are the first of the month
+            while(reference_year < end_year) {
+                reference_day++;
+                if(days_month[reference_month-1] < reference_day) {
+                    reference_day = 1;
+                    reference_month++;
+                }
+                if(reference_month > 12) {
+                    reference_month = 1;
+                    reference_year++;
+                }
+                reference_week++;
+                if(reference_week >= 7) reference_week = 0;
+                if(reference_day == 1 && reference_week == day_of_week) {
+                    answer++;
+                }
+            }
+
             document.getElementById("solution").textContent = answer;
         }
 
         // make the suffix match the range
-        document.getElementById("range_2").oninput = function(e) {
-            val = document.getElementById("range_2").value
-            if(val%10==1)
+        document.getElementById("century").oninput = function(e) {
+            val = document.getElementById("century").value
+            if(val<20)
+                document.getElementById("suffix").innerHTML = "th"
+            else if(val%10==1)
                 document.getElementById("suffix").innerHTML = "st"
             else if(val%10==2)
                 document.getElementById("suffix").innerHTML = "nd"
@@ -74,15 +145,15 @@
                 document.getElementById("suffix").innerHTML = "th"
         }
         
-        document.getElementById("range_1").addEventListener("keydown",
+        document.getElementById("day_of_week").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {
-                    document.getElementById("range_2").focus();
+                    document.getElementById("century").focus();
                 }
             }
         );
 
-        document.getElementById("range_2").addEventListener("keydown",
+        document.getElementById("century").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {
                     document.getElementById("solve").focus();
