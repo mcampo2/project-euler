@@ -32,8 +32,25 @@
         function solve() {
             answer = 0;
             range = document.getElementById("range").value;
+            range = factorial(range);
+            
+            for (let i = 0; i < range.toString().length; i++) {
+                answer += parseInt(range.toString().charAt(i));
+            }
             
             document.getElementById("solution").textContent = answer;
+        }
+
+        function factorial(n) {
+            if (isNaN(parseInt(n))) {
+                return 0;
+            } else if (n < 0) {
+                return -factorial(n);
+            } else if (n == 0) {
+                return 1;
+            } else {
+                return BigInt(n) * BigInt(factorial(n - 1));
+            }
         }
 
         document.getElementById("range").addEventListener("keydown",
