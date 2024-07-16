@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amicable Numbers</title>
+    <style>
+        body {
+            max-width: 30rem;
+        }
+
+        #range {
+            width: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Amicable Numbers</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Let d(n) be defined as the sum of proper divisors of n (numbers
+           less than n which divide evenly into n).</p>
+        <p>If d(a) = b and d(b) = a, where a &ne; b, then a and b are an
+           amicable pair and each of a and b are called amicable numbers.</p>
+        <p>For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20,
+           22, 44, 55 and 110; therefore d(220) = 284.  The proper divisors of
+           284 are 1, 2, 4, 71 and 142; so d(284) = 220.</p>
+        <p>Evaluate the sum of all the amicable numbers under 10000.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The sum of all the amicable numbers under
+           <input id="range" type="text" value="10000"> is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {solve()}
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
