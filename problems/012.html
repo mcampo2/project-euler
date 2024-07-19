@@ -57,8 +57,9 @@
                     if (triangle_value % index == 0) {
                         num_divisors+=2;
                     }
-                } // triangle '1' is a special case
-                if(triangle_value == 1) num_divisors = 1;
+                } if(Number.isInteger(Math.sqrt(triangle_value))) {
+                    num_divisors += 1;
+                }
             }
             
             document.getElementById("solution").textContent = triangle_value;

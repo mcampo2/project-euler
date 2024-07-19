@@ -37,10 +37,28 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            range = document.getElementById("range").value;
+            let answer = 0;
+            let range = parseInt(document.getElementById("range").value);
+            if(isNaN(range)) range = 0;
+
+            while(range > 0) {
+                let sum = sum_divisors(range);
+                if(sum_divisors(sum) == range && sum < range)
+                    answer += range + sum;
+                range--;
+            }
             
             document.getElementById("solution").textContent = answer;
+        }
+
+        function sum_divisors(number) {
+            let sum = 1;
+            if(number == 1) return sum;
+            for(let index = 2; index < Math.sqrt(number); index++) {
+                if(number % index == 0) sum += (index + number / index);
+            } if(Number.isInteger(Math.sqrt(number))) {
+                sum += Math.sqrt(number);
+            } return sum;
         }
 
         document.getElementById("range").addEventListener("keydown",
