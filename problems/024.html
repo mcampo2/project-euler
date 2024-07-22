@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lexicographic Permutations</title>
+    <style>
+        body {
+            max-width: 30rem;
+        }
+        
+        #range {
+            width: 3.25rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lexicographic Permutations</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>A permutation is an ordered arrangement of objects. For example,
+           3124 is one possible permutation of the digits 1, 2, 3 and 4.
+           If all of the permutations are listed numerically or alphabetically,
+           we call it lexicographic order. The lexicographic permutations
+           of 0, 1 and 2 are:</p>
+        <p style="text-align: center">012 &nbsp; 021 &nbsp; 102 &nbsp; 120 &nbsp; 201 &nbsp; 210</p>
+        <p>What is the millionth lexicographic permutation of the digits
+           0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The <input id="range" value="1000000"><span id="suffix">th</span>
+           lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8
+           and 9 is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        // make the suffix match the range
+        document.getElementById("range").oninput = function(e) {
+            val = document.getElementById("range").value
+            console.log(val)
+            if(val>10 && val<20)
+                document.getElementById("suffix").innerHTML = "th"
+            else if(val%10==1)
+                document.getElementById("suffix").innerHTML = "st"
+            else if(val%10==2)
+                document.getElementById("suffix").innerHTML = "nd"
+            else if(val%10==3)
+                document.getElementById("suffix").innerHTML = "rd"
+            else
+                document.getElementById("suffix").innerHTML = "th"
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

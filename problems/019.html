@@ -133,7 +133,7 @@
         // make the suffix match the range
         document.getElementById("century").oninput = function(e) {
             val = document.getElementById("century").value
-            if(val<20)
+            if(val>10 && val<20)
                 document.getElementById("suffix").innerHTML = "th"
             else if(val%10==1)
                 document.getElementById("suffix").innerHTML = "st"
