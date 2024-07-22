@@ -44,9 +44,35 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
+            const UPPER_LIMIT = 28123;
+            let answer = 0;
+            let sum = 0;
+            let abundant_nums = [];
+
+            // find all the abundant numbers
+            for(let i = 1; i <= UPPER_LIMIT; i++)
+                if(isAbundant(i)) abundant_nums.push(i);
+
+            // find the sum of the numbers that can't be made from two abundants
+            for(let i = 1; i <= UPPER_LIMIT; i++) {
+                let is_sum = false;
+                for(let j = 0; j < abundant_nums.length; j++) {
+                    if(abundant_nums[j] >= i) break;
+                    if(abundant_nums.includes(i - abundant_nums[j])) {
+                        is_sum = true;
+                        break;
+                    }
+                } if(!is_sum) sum += i;
+            } answer = sum;
             
             document.getElementById("solution").textContent = answer;
+        }
+
+        function isAbundant(n) {
+            let sum = 0;
+            for(let i = 1; i <= n / 2; i++) {
+                if(n % i == 0) sum += i;
+            } return sum > n;
         }
         
         document.getElementById("solve").onclick = solve;
