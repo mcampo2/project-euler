@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1000-digit Fibonacci Number</title>
+    <style>
+        body {
+            max-width: 30rem;
+        }
+        
+        #range {
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>1000-digit Fibonacci Number</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The Fibonacci sequence is defined by the recurrence relation:</p>
+        <p><i>F</i><sub>n</sub> = <i>F</i><sub>n-1</sub> +
+            <i>F</i><sub>n-2</sub>, where <i>F</i><sub>1</sub>
+            = 1 and <i>F</i><sub>2</sub> = 1.</p>
+        <p>Hence the first 12 terms will be:</p>
+        <p><i>F</i><sub>1</sub> = 1<br>
+           <i>F</i><sub>2</sub> = 1<br>
+           <i>F</i><sub>3</sub> = 2<br>
+           <i>F</i><sub>4</sub> = 3<br>
+           <i>F</i><sub>5</sub> = 5<br>
+           <i>F</i><sub>6</sub> = 8<br>
+           <i>F</i><sub>7</sub> = 13<br>
+           <i>F</i><sub>8</sub> = 21<br>
+           <i>F</i><sub>9</sub> = 34<br>
+           <i>F</i><sub>10</sub> = 55<br>
+           <i>F</i><sub>11</sub> = 89<br>
+           <i>F</i><sub>12</sub> = 144</p>
+        <p>The 12th term, <i>F</i><sub>12</sub>, is the
+           first term to contain three digits.</p>
+        <p>What is the index of the first term in the Fibonacci
+           sequence to contain 1000 digits?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The index of the first term in the Fibonacci sequence
+           to contain <input id="range" value="1000"> digits is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            let answer = 0;
+            let range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
