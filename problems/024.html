@@ -37,16 +37,38 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            range = document.getElementById("range").value;
-            
+            let answer = "undefined";
+            let range = document.getElementById("range").value;
+            let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            let permutation = [];
+
+            if(isNaN(parseInt(range))) digits = [];
+            while(digits.length > 0) {
+                permutation.push(digits[Math.ceil(range / factorial(digits.length - 1))-1]);
+                digits = digits.filter(function(e) { return e !== permutation[permutation.length-1] });
+                range = range % factorial(digits.length);
+                if (range <= 0) permutation = permutation.concat(digits.pop());
+            }
+
+            if(!isNaN(parseInt(range))) answer = permutation.join("");
             document.getElementById("solution").textContent = answer;
+        }
+
+        function factorial(n) {
+            if (isNaN(parseInt(n))) {
+                return 0;
+            } else if (n < 0) {
+                return -factorial(n);
+            } else if (n == 0) {
+                return 1;
+            } else {
+                return n * factorial(n - 1);
+            }
         }
 
         // make the suffix match the range
         document.getElementById("range").oninput = function(e) {
             val = document.getElementById("range").value
-            console.log(val)
             if(val>10 && val<20)
                 document.getElementById("suffix").innerHTML = "th"
             else if(val%10==1)
