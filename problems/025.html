@@ -52,6 +52,17 @@
         function solve() {
             let answer = 0;
             let range = document.getElementById("range").value;
+
+            let a = BigInt(1);
+            let b = BigInt(1);
+            let c = BigInt(0);
+
+            for (let i = 3; c.toString().length < range; i++) {
+                c = a + b;
+                a = b;
+                b = c;
+                answer = i;
+            }
             
             document.getElementById("solution").textContent = answer;
         }
