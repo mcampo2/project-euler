@@ -46,8 +46,30 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            range = document.getElementById("range").value;
+            let answer = 0;
+            let range = document.getElementById("range").value;
+            let max_length = 0;
+
+            for (denominator = 2; denominator < range; denominator++) {
+                let remainders = {};
+                let value = 1;
+                let position = 0;
+
+                // simulate long division
+                while (value != 0 && !(value in remainders)) {
+                    remainders[value] = position;
+                    value = (value * 10) % denominator;
+                    position++;
+                }
+
+                if(value!=0) { // recurring cycle found
+                    let cycle_length = position - remainders[value];
+                    if(cycle_length > max_length) {
+                        max_length = cycle_length;
+                        answer = denominator;
+                    }
+                }
+            }
             
             document.getElementById("solution").textContent = answer;
         }
