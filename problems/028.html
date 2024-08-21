@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Spiral Diagonals</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+
+        input {
+            width: 2rem;
+        }
+
+        .red {
+            color: darkred;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Spiral Diagonals</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Starting with the number 1 and moving to the right in a clockwise
+           direction a 5 by 5 spiral is formed as follows:</p>
+        <p><span class="red">21</span> 22 23 24 <span class="red">25</span><br>
+           20  <span class="red">7</span>  8  <span class="red">9</span> 10<br>
+           19  6  <span class="red">1</span>  2 11<br>
+           18  <span class="red">5</span>  4  <span class="red">3</span> 12<br>
+           <span class="red">17</span> 16 15 14 <span class="red">13</span></p>
+        <p>It can be verified that the sum of the numbers on the
+           diagonals is 101.</p>
+        <p>What is the sum of the numbers on the diagonals in
+           a 1001 by 1001 spiral formed in the same way?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The sum of the numbers on the diagonals in a
+           <input id="range_1" type="text" value="1001"> by
+           <input id="range_2" type="text" value="1001"> spiral is<br>
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range_1 = document.getElementById("range_1").value;
+            range_2 = document.getElementById("range_2").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range_1").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("range_2").focus();
+                }
+            }
+        );
+
+        document.getElementById("range_2").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
