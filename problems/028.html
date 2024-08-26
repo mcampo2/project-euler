@@ -39,29 +39,67 @@
     <div>
         <h2>Solution</h2>
         <p>The sum of the numbers on the diagonals in a
-           <input id="range_1" type="text" value="1001"> by
-           <input id="range_2" type="text" value="1001"> spiral is<br>
+           <input id="range" type="text" value="1001"> by
+           <b id="range_2">1001</b> spiral is<br>
            <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
+    
     <script>
         function solve() {
-            answer = 0;
-            range_1 = document.getElementById("range_1").value;
-            range_2 = document.getElementById("range_2").value;
+            let range = document.getElementById("range").value;
+            let answer = 0;
+
+            let size = -1;
+            let position = 1;
+            let directions = {
+                right: 0,
+                down: 1,
+                left: 2,
+                up: 3
+            };
+            
+            let dirrection = directions.right;
+            for (let count = 0; size < range; count++) {
+                if (dirrection == directions.right) {
+                    position += Math.floor(count / 2) + 1;
+                    answer += position-1;
+                    dirrection = directions.down;
+                    size+=2;
+                } else if (dirrection == directions.down) {
+                    position += Math.floor(count / 2) + 1;
+                    answer += position;
+                    dirrection = directions.left;
+                } else if (dirrection == directions.left) {
+                    position += Math.floor(count / 2) + 1;
+                    answer += position;
+                    dirrection = directions.up;
+                } else if (dirrection == directions.up) {
+                    position += Math.floor(count / 2) + 1;
+                    answer += position;
+                    dirrection = directions.right;
+                }
+            }
             
             document.getElementById("solution").textContent = answer;
         }
 
-        document.getElementById("range_1").addEventListener("keydown",
+        document.getElementById("range").addEventListener("blur",
             function(event) {
-                if (event.key === "Enter") {
-                    document.getElementById("range_2").focus();
+                number = parseInt(document.getElementById("range").value);
+                if (isNaN(number)) {
+                    number = 1;
+                } else if (number == 0) {
+                    number = 1;
+                } else if (number % 2 == 0) {
+                    number += 1;
                 }
+                document.getElementById("range").value = number;
+                document.getElementById("range_2").textContent = number;
             }
         );
 
-        document.getElementById("range_2").addEventListener("keydown",
+        document.getElementById("range").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {
                     document.getElementById("solve").focus();
