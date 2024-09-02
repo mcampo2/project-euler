@@ -57,14 +57,14 @@
 
             // find max length of 5th powers
             max_length = 0;
-            while ((9**5+"").length >= max_length) max_length++;
+            while ((9**range+"").length >= max_length) max_length++;
             max_value =  9**5 * max_length;
 
             // start checking from 10
             for (i = 10; i <= max_value; i++) {
                 sum = 0;
                 for (j = 0; j < (i+"").length; j++) {
-                    sum += (i+"")[j]**5;
+                    sum += (i+"")[j]**range;
                 }
                 if (sum == i) answer += i;
             }
