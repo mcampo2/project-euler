@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digit Fifth Powers</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+
+        div div {
+            margin: 1rem;
+            padding-left: 8rem;
+        }
+
+        div div p {
+            margin: 0;
+        }
+        
+        #range {
+            width: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Digit Fifth Powers</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Surprisingly there are only three numbers that can be written as the
+           sum of fourth powers of their digits:</p>
+        <div>
+            <p>1634 = 1<sup>4</sup> + 6<sup>4</sup>
+            + 3<sup>4</sup> + 4<sup>4</sup></p>
+            <p>8208 = 8<sup>4</sup> + 2<sup>4</sup>
+            + 0<sup>4</sup> + 8<sup>4</sup></p>
+            <p>9474 = 9<sup>4</sup> + 4<sup>4</sup>
+            + 7<sup>4</sup> + 4<sup>4</sup></p>
+        </div>
+        <p>As 1 = 1<sup>4</sup> is not a sum it is not included.</p>
+        <p>The sum of these numbers is 1634 + 8208 + 9474 = 19316.</p>
+        <p>Find the sum of all the numbers that can be written as the sum of
+           fifth powers of their digits.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The sum of all the numbers that can be written as the sum of
+           <input id="range" type="text" value="5"><span id="suffix">th</span>
+           powers of their digits is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+
+        // make the suffix match the range
+        document.getElementById("range").oninput = function(e) {
+            val = document.getElementById("range").value
+            if(val>10 && val<20)
+                document.getElementById("suffix").innerHTML = "th"
+            else if(val%10==1)
+                document.getElementById("suffix").innerHTML = "st"
+            else if(val%10==2)
+                document.getElementById("suffix").innerHTML = "nd"
+            else if(val%10==3)
+                document.getElementById("suffix").innerHTML = "rd"
+            else
+                document.getElementById("suffix").innerHTML = "th"
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
