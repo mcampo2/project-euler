@@ -40,11 +40,33 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            range1 = document.getElementById("range_1").value;
-            range2 = document.getElementById("range_2").value;
-            
-            document.getElementById("solution").textContent = answer;
+                let start = document.getElementById("range_1").value;
+                let end = document.getElementById("range_2").value;
+                Number.isInteger(start[0]) ? start[0] : 1;
+                Number.isInteger(end[0]) ? end[0] : 1;
+                range = end - start + 1;
+                products = new Set();
+                answer = 0;
+                
+                // Since the concatenated string is a maximum of 9
+                // digits long a rough estimate can be made:
+                // a is < 100 and b is < 10000 / a
+                for (let a = 1; a < 100; a++)
+                    for (let b = a + 1; b < 10000 / a; b++) {
+                        let product = a * b;
+                        let concatenated = '' + a + b + product;
+                        if (concatenated.length === range
+                                && isPandigital(concatenated, start, end))
+                            products.add(product);
+                    } products.forEach(product => answer += product);
+                document.getElementById("solution").textContent = answer;
+            }
+
+        function isPandigital(numString, start, end) {
+            let range = '';
+            for (let i = start; i <= end; i++) range += i.toString();
+            const digits = numString.split('').sort().join('');
+            return digits === range;
         }
 
         document.getElementById("range_1").addEventListener("keydown",
