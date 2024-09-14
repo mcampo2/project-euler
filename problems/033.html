@@ -37,10 +37,43 @@
     <script>
         function solve() {
             answer = 0;
-            
+
+            let productNumerator = 1;
+            let productDenominator = 1;
+            for (let numerator = 10; numerator < 100; numerator++) {
+                for (let denominator = numerator + 1; denominator < 100; denominator++) {
+                    if (isDigitCancellingFraction(numerator, denominator)) {
+                        productNumerator *= numerator;
+                        productDenominator *= denominator;
+                    }
+                }
+            }
+            // Simplify the product
+            const divisor = gcd(productNumerator, productDenominator);
+            answer = productDenominator / divisor;
+
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        let gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+
+        function isDigitCancellingFraction(numerator, denominator) {
+            const numStr = numerator.toString();
+            const denomStr = denominator.toString();
+            // We only care about two-digit numbers
+            if (numStr[1] === '0' && denomStr[1] === '0') return false;
+            // Check for a shared digit and cancel the common digit and compare fractions
+            if (numStr[0] === denomStr[0] && denomStr[1] !== '0')
+                return (numerator / denominator) === (parseInt(numStr[1]) / parseInt(denomStr[1]));
+            if (numStr[0] === denomStr[1] && denomStr[0] !== '0')
+                return (numerator / denominator) === (parseInt(numStr[1]) / parseInt(denomStr[0]));
+            if (numStr[1] === denomStr[0] && denomStr[1] !== '0')
+                return (numerator / denominator) === (parseInt(numStr[0]) / parseInt(denomStr[1]));
+            if (numStr[1] === denomStr[1] && denomStr[0] !== '0')
+                return (numerator / denominator) === (parseInt(numStr[0]) / parseInt(denomStr[0]));
+            return false;
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
