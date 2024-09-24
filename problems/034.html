@@ -28,11 +28,33 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            
+            let answer = 0;
+            let max_length = 1; // when 9! * max_length becomes smaller than
+            // the number itself we know it can't be a curious number
+            while(factorial(9) * max_length > '9'.repeat(max_length)) max_length++;
+            let max = factorial(9) * max_length;
+
+            for (let i = 10; i <= max; i++) if(isCurious(i)) answer += i;
             document.getElementById("solution").textContent = answer;
         }
+
+        function factorial(n) {
+            let result = 1;
+            if (n === 0) return result;
+            for (let i = 1; i <= n; i++) result *= i;
+            return result;
+        }
         
+        function isCurious(n) {
+            let sum = 0;
+            let num = n;
+            while (num > 0) {
+                let digit = num % 10;
+                num = Math.floor(num / 10);
+                sum += factorial(digit);
+            } return sum === n;
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
