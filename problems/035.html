@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Primes</title>
+    <style>
+        body {
+            max-width: 30rem;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Circular Primes</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The number 197, is called a circular prime because all rotations of
+           the digits: 197, 971, and 719, are themselves prime.</p>
+        <p>There are thirteen such primes below 100: 2, 3, 5,
+           7, 11, 13, 17, 31, 37, 71, 73, 79, and 97.</p>
+        <p>How many circular primes are there below one million?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The number of circular primes below
+           <input id="range" type="text" value="1000000"> is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = document.getElementById("range").value;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
