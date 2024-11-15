@@ -56,10 +56,24 @@
     <script>
         function solve() {
             answer = 0;
-            
-            document.getElementById("solution").textContent = answer;
+            for (let n = 1; n < 10000; n++) {
+                let concatenatedProduct = '';
+                let k = 1;
+                while (concatenatedProduct.length < 9) {
+                    concatenatedProduct += (n * k).toString();
+                    k++;
+                } if (concatenatedProduct.length === 9 && isPandigital(concatenatedProduct)) {
+                    answer = Math.max(answer, parseInt(concatenatedProduct, 10));
+                }
+            } document.getElementById("solution").textContent = answer;
         }
         
+        function isPandigital(numStr) {
+            if (numStr.length !== 9) return false;
+            const digits = new Set(numStr);
+            return digits.size === 9 && !digits.has('0');
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
