@@ -34,9 +34,21 @@
             answer = 0;
             range = Math.abs(document.getElementById("range").value);
             
+            for (let i = 1; i < range; i++) {
+                const decimalStr = i.toString();
+                const binaryStr = i.toString(2);
+                if (isPalindrome(decimalStr) && isPalindrome(binaryStr)) {
+                    answer += i;
+                }
+            }
+
             document.getElementById("solution").textContent = answer;
         }
 
+        function isPalindrome(str) {
+            return str === str.split('').reverse().join('');
+        }
+        
         document.getElementById("range").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {
