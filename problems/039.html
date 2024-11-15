@@ -30,7 +30,7 @@
         <h2>Solution</h2>
         <p>The perimeter of right angle triangles less than
            <input id="range" type="text" value="1000">,
-           whose solutions are maximised, is
+           with the most solutions is
            <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
@@ -38,8 +38,26 @@
         function solve() {
             answer = 0;
             range = Math.abs(document.getElementById("range").value);
+            let maxSolutions = 0;
+            for (let p = 1; p <= range; p++) {
+                const solutions = countRightTriangles(p);
+                if (solutions > maxSolutions) {
+                    maxSolutions = solutions;
+                    answer = p;
+                }
+            } document.getElementById("solution").textContent = answer;
+        }
 
-            document.getElementById("solution").textContent = answer;
+        function countRightTriangles(perimeter) {
+            let count = 0;
+            for (let a = 1; a < perimeter / 2; a++) {
+                for (let b = a; b < (perimeter - a) / 2; b++) {
+                    const c = perimeter - a - b;
+                    if (a * a + b * b === c * c) {
+                        count++;
+                    }
+                }
+            } return count;
         }
         
         document.getElementById("range").addEventListener("keydown",
