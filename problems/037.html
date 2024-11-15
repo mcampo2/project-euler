@@ -37,10 +37,44 @@
     <script>
         function solve() {
             answer = 0;
-
+            count = 11;
+            const truncatablePrimes = [];
+            let num = 11; // Start checking from 11, as single-digit primes are excluded
+            while (truncatablePrimes.length < count) {
+                if (isPrime(num) && isTruncatablePrime(num)) {
+                    truncatablePrimes.push(num);
+                } num += 2; // Only check odd numbers
+            }
+            truncatablePrimes.forEach(prime => { answer += prime; console.log(answer) });
             document.getElementById("solution").textContent = answer;
         }
         
+        function isPrime(n) {
+            if (n < 2) return false;
+            if (n === 2) return true;
+            if (n % 2 === 0) return false;
+            for (let i = 3; i <= Math.sqrt(n); i += 2) {
+                if (n % i === 0) return false;
+            } return true;
+        }
+
+        function isTruncatablePrime(n) {
+            if (n < 10) return false; // Single-digit primes are not truncatable
+            const numStr = n.toString();
+            // Check left-to-right truncations
+            for (let i = 1; i < numStr.length; i++) {
+                if (!isPrime(parseInt(numStr.slice(i), 10))) {
+                    return false;
+                }
+            }
+            // Check right-to-left truncations
+            for (let i = 1; i < numStr.length; i++) {
+                if (!isPrime(parseInt(numStr.slice(0, -i), 10))) {
+                    return false;
+                }
+            } return true;
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
