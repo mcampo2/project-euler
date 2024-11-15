@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandigital Prime</title>
+    <style>
+        body {
+            width: 32rem;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pandigital Prime</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>We shall say that an <i>n</i>-digit number is pandigital if it makes
+           use of all the digits 1 to <i>n</i> exactly once. For example, 2143
+           is a 4-digit pandigital and is also prime.</p>
+        <p>What is the largest <i>n</i>-digit pandigital prime that exists?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The largest <i>n</i>-digit pandigital prime that exists is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
