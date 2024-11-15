@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truncatable Primes</title>
+    <style>
+        body {
+            max-width: 30rem;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Truncatable Primes</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The number 3739 has an interesting property. Being prime itself, it
+           is possible to continuously remove digits from left to right, and
+           remain prime at each stage: 3797, 797, 97, and 7.  Similarly we can
+           work from right to left: 3797, 379, 37, and 3.</p>
+        <p>Find the sum of the only eleven primes that are both truncatable from
+           left to right and right to left.</p>
+        <p>NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The sum of the only eleven primes that are both truncatable from left
+           to right and right to left are
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
