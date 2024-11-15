@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandigital Multiples</title>
+    <style>
+        body {
+            max-width: 30rem;
+        }
+
+        div div {
+            margin: 1rem;
+            padding-left: 8rem;
+        }
+
+        div div p {
+            margin: 0;
+        }
+        
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pandigital Multiples</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>TTake the number 192 and multiply it by each of 1, 2, and 3:</p>
+        <div>
+            <p>192 x 1 = 192</p>
+            <p>192 x 2 = 192</p>
+            <p>192 x 3 = 192</p>
+        </div>
+        <p>By concatenating each product we get the 1 to 9 pandigital,
+           192384576.  We will call 192384576 the concatenated product of 192
+           and (1, 2, 3).</p>
+        <p>The same can be achieved by starting with 9 and multiplying by 1, 2,
+           3, 4, and 5, giving the pandigital, 918273645, which is the
+           concatenated product of 9 and (1, 2, 3, 4, 5).</p>
+        <p>What is the largest 1 to 9 pandigital 9-digit number that can be
+           formed as the concatenated product of an integer with (1, 2, …,
+           <i>n</i>) where <i>n</i> > 1?</p>
+        <p></p>
+        <p></p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The largest 1 to 9 pandigital 9-digit number that can be formed as
+           the concatenated product of an integer with (1, 2, …, <i>n</i>) where
+           <i>n</i> > 1? is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
