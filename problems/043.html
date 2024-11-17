@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub-string Divisibility</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sub-string Divisibility</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The number, 1406357289, is a 0 to 9 pandigital number because it is
+           made up of each of the digits 0 to 9 in some order, but it also has a
+           rather interesting sub-string divisibility property.</p>
+        <p>Let <i>d</i><sub>1</sub> be the 1<sup>st</sup> digit,
+           <i>d</i><sub>2</sub> be the 2<sup>nd</sup> digit, and so on. In this
+           way, we note the following:</p>
+        <ul>
+            <li>
+                <i>d</i><sub>2</sub><i>d</i><sub>3</sub><i>d</i><sub>4</sub>
+                = 406 is divisible by 2
+            </li>
+            <li>
+                <i>d</i><sub>3</sub><i>d</i><sub>4</sub><i>d</i><sub>5</sub>
+                = 063 is divisible by 3
+            </li>
+            <li>
+                <i>d</i><sub>4</sub><i>d</i><sub>5</sub><i>d</i><sub>6</sub>
+                = 635 is divisible by 5
+            </li>
+            <li>
+                <i>d</i><sub>5</sub><i>d</i><sub>6</sub><i>d</i><sub>7</sub>
+                = 357 is divisible by 7
+            </li>
+            <li>
+                <i>d</i><sub>6</sub><i>d</i><sub>7</sub><i>d</i><sub>8</sub>
+                = 572 is divisible by 11
+            </li>
+            <li>
+                <i>d</i><sub>7</sub><i>d</i><sub>8</sub><i>d</i><sub>9</sub>
+                = 728 is divisible by 13
+            </li>
+            <li>
+                <i>d</i><sub>8</sub><i>d</i><sub>9</sub><i>d</i><sub>10</sub>
+                = 289 is divisible by 17
+            </li>
+        </ul>
+        <p>Find the sum of all 0 to 9 pandigital numbers with this property.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The sum of all 0 to 9 pandigital numbers with the property that each
+           of their consecutive three-digit substrings, starting from the second
+           digit, is divisible by the primes 2, 3, 5, 7, 11, 13, and 17, is 
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            const pandigitalNumbers = generatePandigitalNumbers(digits);
+            const validNumbers = pandigitalNumbers.filter(numStr => isDivisibleProperty(numStr));
+            answer = validNumbers.reduce((sum, numStr) => sum + parseInt(numStr, 10), 0);
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        function generatePandigitalNumbers(digits) {
+            const permutations = [];
+            const stack = [{ current: '', remaining: digits }];
+            while (stack.length > 0) {
+                const { current, remaining } = stack.pop();
+                if (remaining.length === 0) {
+                    permutations.push(current);
+                    continue;
+                }
+                for (let i = 0; i < remaining.length; i++) {
+                    const newCurrent = current + remaining[i];
+                    const newRemaining = remaining.slice(0, i).concat(remaining.slice(i + 1));
+                    stack.push({ current: newCurrent, remaining: newRemaining });
+                }
+            } return permutations;
+        }
+
+
+        function isDivisibleProperty(numStr) {
+            const primes = [2, 3, 5, 7, 11, 13, 17];
+            for (let i = 0; i < primes.length; i++) {
+                const substring = parseInt(numStr.substring(i + 1, i + 4), 10);
+                if (substring % primes[i] !== 0) return false;
+            } return true;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

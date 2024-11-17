@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coded Triangle Numbers</title>
+    <style>
+        a {
+            color: saddlebrown;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        body {
+            width: 30rem;
+        }
+
+        div div {
+            text-align: center;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Coded Triangle Numbers</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The <i>n</i><sup>th</sup> term of the sequence of triangle numbers is
+           given by, <i>t</i><sub>n</sub> = <sup>1</sup>&frasl;<sub>2</sub>
+           <i>n</i> (<i>n</i> + 1); so the first ten triangle numbers are:</p>
+        <div>
+            <p>1, 3, 6, 10, 15, 21, 28, 36, 45, 55, …</p>
+        </div>
+        <p>By converting each letter in a word to a number corresponding to its
+           alphabetical position and adding these values we form a word value.
+           For example, the word value for SKY is 19 + 11 + 25 = 55 =
+           <i>t</i><sub>10</sub>. If the word value is a triangle number then we
+           shall call the word a triangle word.</p>
+        <p>Using <a href="0042_words.txt">words.txt</a> (right click and 'Save
+           Link/Target As...'), a 16K text file containing nearly two-thousand
+           common English words, how many are triangle words?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The total number of triangle words in the file is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        async function solve() {
+            answer = 0;
+            // read file
+            const file = response = await fetch('0042_words.txt');
+            let words = response.ok ? await response.text() : '';
+            words = words.split(',').map(name => name.replace(/"/g, ''));
+            // count triangle words
+            const maxWordValue = Math.max(...words.map(word => wordValue(word)));
+            const triangleNumbers = generateTriangleNumbers(maxWordValue);
+            answer = words.filter(word => triangleNumbers.has(wordValue(word))).length;
+
+            document.getElementById("solution").textContent = answer;
+        }
+
+        function wordValue(word) {
+            return word.toUpperCase().split('')
+                .reduce((sum, char) => sum + (char.charCodeAt(0) - 'A'.charCodeAt(0) + 1), 0);
+        }
+
+        function generateTriangleNumbers(limit) {
+            const triangleNumbers = new Set();
+            let n = 1;
+            let t = 0;
+            while (t <= limit) {
+                t = (n * (n + 1)) / 2;
+                triangleNumbers.add(t);
+                n++;
+            } return triangleNumbers;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
