@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goldbach's Other Conjecture</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div p {
+            margin: auto;
+            text-align: center;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Goldbach's Other Conjecture</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>It was proposed by Christina Goldbach that every odd composite number
+           can be written as the sum of a prime and twice a square.</p>
+        <div>
+            <p>9 = 7 + 2 X 1<sup>2</sup></p>
+            <p>15 = 7 + 2 X 2<sup>2</sup></p>
+            <p>21 = 3 + 2 X 3<sup>2</sup></p>
+            <p>25 = 7 + 2 X 3<sup>2</sup></p>
+            <p>27 = 19 + 2 X 2<sup>2</sup></p>
+            <p>33 = 31 + 2 X 1<sup>2</sup></p>
+        </div>
+        <p>It turns out that the conjecture was false.</p>
+        <p>What is the smallest odd composite that cannot be written as the sum
+           of a prime and twice a square?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>the smallest odd composite that cannot be written as the sum of a
+           prime and twice a square is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

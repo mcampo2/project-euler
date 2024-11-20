@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consecutive Prime Sum</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+
+        div div p {
+            margin: auto;
+            text-align: center;
+        }
+    
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Consecutive Prime Sum</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The prime 41, can be written as the sum of six consecutive
+           primes:</p>
+        <div><p>41 = 2 + 3 + 5 + 7 + 11 + 13.</p></div>
+        <p>This is the longest sum of consecutive primes that adds to a prime
+           below one-hundred.</p>
+        <p>The longest sum of consecutive primes below one-thousand that adds to
+           a prime, contains 21 terms, and is equal to 953.</p>
+        <p>Which prime, below one-million, can be written as the sum of the most
+           consecutive primes?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The prime, below <input id="range" type="text" value="1000000">,
+           which can be written as the sum of the most consecutive primes is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = Math.abs(document.getElementById("range").value);
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
