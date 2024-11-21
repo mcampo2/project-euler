@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,52 +21,92 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Distinct Primes Factors</h1>
     <div>
         <h2>Problem</h2>
         <p>The first two consecutive numbers to have two distinct prime factors
-           are:</p>
+            are:</p>
         <div>
             <p>14 = 2 X 7</p>
             <p>15 = 3 X 5</p>
         </div>
         <p>The first three consecutive numbers to have three distinct prime
-           factors are:</p>
+            factors are:</p>
         <div>
             <p>644 = 2<sup>2</sup> X 7 X 23</p>
             <p>645 = 3 X 5 X 43</p>
             <p>646 = 2 X 17 X 19</p>
         </div>
         <p>Find the first four consecutive integers to have four distinct prime
-           factors each. What is the first of these numbers?</p>
+            factors each. What is the first of these numbers?</p>
     </div>
     <div>
         <h2>Solution</h2>
         <p>The first integer of the first
-           <input id="range" type="text" value="4">
-           consecutive integers to have four distinct prime factors is
-           <b><span id="solution">???</span></b>.</p>
+            <input id="range" type="text" value="4">
+            consecutive integers to have four distinct prime factors is
+            <b><span id="solution">???</span></b>.
+        </p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = findFirstConsecutiveNumbers(range, range);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function findFirstConsecutiveNumbers(targetCount, consecutive) {
+            let number = 2; // Start checking from 2
+            let consecutiveCount = 0;
+
+            while (true) {
+                if (primeFactorsCount(number) === targetCount) {
+                    consecutiveCount++;
+                    if (consecutiveCount === consecutive) {
+                        return number - consecutive + 1; // Return the first number in the sequence
+                    }
+                } else {
+                    consecutiveCount = 0; // Reset count if not consecutive
+                }
+                number++;
+            }
+        }
+
+        function primeFactorsCount(n) {
+            let count = 0;
+            let factor = 2;
+
+            while (n > 1) {
+                if (n % factor === 0) {
+                    count++;
+                    while (n % factor === 0) {
+                        n /= factor;
+                    }
+                }
+                factor++;
+                if (factor * factor > n && n > 1) {
+                    count++;
+                    break;
+                }
+            }
+
+            return count;
+        }
+
         document.getElementById("range").addEventListener("keydown",
-            function(event) {
+            function (event) {
                 if (event.key === "Enter") {
                     document.getElementById("solve").focus();
                     solve();
                 }
             }
         );
-        
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
+
 </html>

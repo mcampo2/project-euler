@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,14 +24,15 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Self Powers</h1>
     <div>
         <h2>Problem</h2>
         <p>The series, 1<sup>1</sup> + 2<sup>2</sup> + 3<sup>3</sup>
-           + … + 10<sup>10</sup> = 10405071317.</p>
+            + … + 10<sup>10</sup> = 10405071317.</p>
         <p>Find the last ten digits of the series, 1<sup>1</sup> + 2<sup>2</sup>
-           + 3<sup>3</sup> + … + 1000<sup>1000</sup>.</p>
+            + 3<sup>3</sup> + … + 1000<sup>1000</sup>.</p>
     </div>
     <div>
         <h2>Solution</h2>
@@ -39,27 +41,41 @@
                 <span class="bottom"><i>n</i>=1</span>
             </span><i>n<sup>n</sup></i>, where <i>N</i> is equal to
             <input id="range" type="text" value="1000"> is
-           <b><span id="solution">???</span></b>.</p>
+            <b><span id="solution">???</span></b>.
+        </p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
             answer = 0;
             range = Math.abs(document.getElementById("range").value);
-
+            answer = lastTenDigitsOfSeries(range).toString().padStart(10, '0');
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function lastTenDigitsOfSeries(limit) {
+            const modulus = 10 ** 10;
+            let sum = 0;
+            for (let i = 1; i <= limit; i++) {
+                let term = 1;
+                for (let j = 1; j <= i; j++) {
+                    term = (term * i) % modulus;
+                }
+                sum = (sum + term) % modulus;
+            } return sum;
+        }
+
         document.getElementById("range").addEventListener("keydown",
-            function(event) {
+            function (event) {
                 if (event.key === "Enter") {
                     document.getElementById("solve").focus();
                     solve();
                 }
             }
         );
-        
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
+
 </html>

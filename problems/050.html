@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,43 +15,80 @@
             margin: auto;
             text-align: center;
         }
-    
+
         #range {
             width: 3.5rem;
         }
     </style>
 </head>
+
 <body>
     <h1>Consecutive Prime Sum</h1>
     <div>
         <h2>Problem</h2>
         <p>The prime 41, can be written as the sum of six consecutive
-           primes:</p>
-        <div><p>41 = 2 + 3 + 5 + 7 + 11 + 13.</p></div>
+            primes:</p>
+        <div>
+            <p>41 = 2 + 3 + 5 + 7 + 11 + 13.</p>
+        </div>
         <p>This is the longest sum of consecutive primes that adds to a prime
-           below one-hundred.</p>
+            below one-hundred.</p>
         <p>The longest sum of consecutive primes below one-thousand that adds to
-           a prime, contains 21 terms, and is equal to 953.</p>
+            a prime, contains 21 terms, and is equal to 953.</p>
         <p>Which prime, below one-million, can be written as the sum of the most
-           consecutive primes?</p>
+            consecutive primes?</p>
     </div>
     <div>
         <h2>Solution</h2>
         <p>The prime, below <input id="range" type="text" value="1000000">,
-           which can be written as the sum of the most consecutive primes is
-           <b><span id="solution">???</span></b>.</p>
+            which can be written as the sum of the most consecutive primes is
+            <b><span id="solution">???</span></b>.
+        </p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
             answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = findLongestPrimeSum(range);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        // Main function to find the prime below one million that can be written as the sum of the most consecutive primes
+        function findLongestPrimeSum(limit) {
+            const primes = generatePrimes(limit);
+            const primeSet = new Set(primes);
+            let maxSum = 0;
+            let maxTerms = 0;
+            for (let start = 0; start < primes.length; start++) {
+                let sum = 0;
+                for (let end = start; end < primes.length; end++) {
+                    sum += primes[end];
+                    if (sum >= limit) break;
+                    if (primeSet.has(sum) && end - start + 1 > maxTerms) {
+                        maxTerms = end - start + 1;
+                        maxSum = sum;
+                    }
+                }
+            } return maxSum;
+        }
+
+        function generatePrimes(limit) {
+            const sieve = new Array(limit).fill(true);
+            sieve[0] = sieve[1] = false;
+            for (let i = 2; i * i < limit; i++) {
+                if (sieve[i]) {
+                    for (let j = i * i; j < limit; j += i) {
+                        sieve[j] = false;
+                    }
+                }
+            } return sieve
+                .map((isPrime, index) => (isPrime ? index : null))
+                .filter((num) => num !== null);
+        }
+
         document.getElementById("range").addEventListener("keydown",
-            function(event) {
+            function (event) {
                 if (event.key === "Enter") {
                     document.getElementById("solve").focus();
                     solve();
@@ -61,4 +99,5 @@
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
+
 </html>

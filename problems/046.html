@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,12 +21,13 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Goldbach's Other Conjecture</h1>
     <div>
         <h2>Problem</h2>
         <p>It was proposed by Christina Goldbach that every odd composite number
-           can be written as the sum of a prime and twice a square.</p>
+            can be written as the sum of a prime and twice a square.</p>
         <div>
             <p>9 = 7 + 2 X 1<sup>2</sup></p>
             <p>15 = 7 + 2 X 2<sup>2</sup></p>
@@ -36,23 +38,49 @@
         </div>
         <p>It turns out that the conjecture was false.</p>
         <p>What is the smallest odd composite that cannot be written as the sum
-           of a prime and twice a square?</p>
+            of a prime and twice a square?</p>
     </div>
     <div>
         <h2>Solution</h2>
-        <p>the smallest odd composite that cannot be written as the sum of a
-           prime and twice a square is
-           <b><span id="solution">???</span></b>.</p>
+        <p>The smallest odd composite that cannot be written as the sum of a
+            prime and twice a square is
+            <b><span id="solution">???</span></b>.
+        </p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
             answer = 0;
 
-            document.getElementById("solution").textContent = answer;
+            let n = 9;
+            while (true) {
+                if (!isPrime(n)) {
+                    let satisfiesGoldbach = false;
+                    for (let prime = 2; prime < n; prime++) {
+                        if (isPrime(prime) && isTwiceSquare(n - prime)) {
+                            satisfiesGoldbach = true;
+                            break;
+                        }
+                    } if (!satisfiesGoldbach) answer = n;
+                } n += 2;
+                if ( answer > 0) break;
+            } document.getElementById("solution").textContent = answer;
         }
-        
+
+        function isPrime(n) {
+            if (n < 2) return false;
+            for (let i = 2; i * i <= n; i++) {
+                if (n % i === 0) return false;
+            } return true;
+        }
+
+        function isTwiceSquare(n) {
+            const sqrt = Math.sqrt(n / 2);
+            return sqrt === Math.floor(sqrt);
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
+
 </html>
