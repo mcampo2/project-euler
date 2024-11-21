@@ -40,8 +40,8 @@
             let answer = 0;
 
             // read file
-            const file = response = await fetch('0022_names.txt');
-            let names = response.ok ? await response.text() : '';
+            const file = await fetch('0022_names.txt');
+            let names = file.ok ? await file.text() : '';
             // split file
             names = names.split(',').map(name => name.replace(/"/g, ''));
             // sort file

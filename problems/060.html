@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Pair Sets</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+
+        #range {
+            width: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prime Pair Sets</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The primes 3, 7, 109, and 673, are quite remarkable. By taking any
+           two primes and concatenating them in any order the result will always
+           be prime. For example, taking 7 and 109, both 7109 and 1097 are
+           prime. The sum of these four primes, 792, represents the lowest sum
+           for a set of four primes with this property.</p>
+        <p>Find the lowest sum for a set of five primes for which any two primes
+           concatenate to produce another prime.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The lowest sum for a set of <input id="range" type="text" value="5">
+           primes for which any two primes concatenate to produce another prime
+           is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = Math.abs(document.getElementById("range").value);
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

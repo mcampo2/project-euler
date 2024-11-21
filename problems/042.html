@@ -54,8 +54,8 @@
         async function solve() {
             answer = 0;
             // read file
-            const file = response = await fetch('0042_words.txt');
-            let words = response.ok ? await response.text() : '';
+            const file = await fetch('0042_words.txt');
+            let words = file.ok ? await file.text() : '';
             words = words.split(',').map(name => name.replace(/"/g, ''));
             // count triangle words
             const maxWordValue = Math.max(...words.map(word => wordValue(word)));

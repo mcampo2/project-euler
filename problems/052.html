@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permuted Multiples</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Permuted Multiples</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>It can be seen that the number, 125874, and its double, 251748,
+           contain exactly the same digits, but in a different order.</p>
+        <p>Find the smallest positive integer, <i>x</i>, such that 2<i>x</i>,
+           3<i>x</i>, 4, <i>x</i>, 5<i>x</i>, and 6<i>x</i>, contain the same
+           digits.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The smallest positive integer, <i>x</i>, such that 2<i>x</i>,
+           3<i>x</i>, 4, <i>x</i>, 5<i>x</i>, and 6<i>x</i>, contain the same
+           digits is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
