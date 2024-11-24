@@ -61,8 +61,37 @@
         function solve() {
             answer = 0;
             range = Math.abs(document.getElementById("range").value);
-
+            answer = findSideLength(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findSideLength(percent) {
+            let sideLength = 1;
+            let totalDiagonals = 1;
+            let primeCount = 0;
+            let currentNumber = 1;
+            while (true) {
+                sideLength += 2; // Increase side length by 2 for the next layer
+                for (let i = 0; i < 4; i++) {
+                    currentNumber += sideLength - 1; // Calculate the next diagonal number
+                    if (isPrime(currentNumber)) primeCount++;
+                } totalDiagonals += 4;
+                const primeRatio = primeCount / totalDiagonals;
+                if (primeRatio < (percent/100)) {
+                    return sideLength; // Return side length when ratio falls below 10%
+                }
+            }
+        }
+
+        function isPrime(num) {
+            if (num < 2) return false;
+            if (num === 2 || num === 3) return true;
+            if (num % 2 === 0 || num % 3 === 0) return false;
+            let i = 5;
+            while (i * i <= num) {
+                if (num % i === 0 || num % (i + 2) === 0) return false;
+                i += 6;
+            } return true;
         }
         
         document.getElementById("range").addEventListener("keydown",

@@ -60,12 +60,36 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = countLychrelNumbers(range);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function countLychrelNumbers(limit) {
+            let count = 0;
+            for (let i = 1; i < limit; i++)
+                if (isLychrel(i)) count++;
+            return count;
+        }
+
+        function isLychrel(number) {
+            let current = number;
+            for (let i = 0; i < 50; i++) {
+                current = reverseAndAdd(current);
+                if (isPalindrome(current)) return false;
+            } return true;
+        }
+
+        function reverseAndAdd(number) {
+            const reversed = parseInt(number.toString().split('').reverse().join(''), 10);
+            return number + reversed;
+        }
+
+        function isPalindrome(number) {
+            const str = number.toString();
+            return str === str.split('').reverse().join('');
+        }
+
         document.getElementById("range").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {

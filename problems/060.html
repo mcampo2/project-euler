@@ -37,9 +37,54 @@
     <script>
         function solve() {
             answer = 0;
-            range = Math.abs(document.getElementById("range").value);
-            
+            setSize = Math.abs(document.getElementById("range").value);
+            const primeLimit = 10000;
+            const primeSet = findPrimeSet(primeLimit, setSize);
+            if (primeSet) answer = primeSet.reduce((sum, num) => sum + num, 0);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findPrimeSet(primeLimit, setSize) {
+            const primes = generatePrimes(primeLimit);
+             for (let i = 0; i < primes.length; i++) {
+                const result = findSet([primes[i]], i + 1, primes, setSize);
+                if (result) return result;
+            } return null;
+        }
+
+        function findSet(set, start, primes, setSize) {
+            if (set.length === setSize) return set;
+            for (let i = start; i < primes.length; i++) {
+                const candidate = primes[i];
+                if (set.every(p => areConcatenationsPrime(p, candidate))) {
+                    const result = findSet([...set, candidate], i + 1, primes, setSize);
+                    if (result) return result;
+                }
+            } return null;
+        }
+
+        function areConcatenationsPrime(p1, p2) {
+            const concat1 = parseInt(`${p1}${p2}`, 10);
+            const concat2 = parseInt(`${p2}${p1}`, 10);
+            return isPrime(concat1) && isPrime(concat2);
+        }
+
+        function generatePrimes(limit) {
+            const primes = [];
+            for (let i = 2; i <= limit; i++) {
+                if (isPrime(i)) primes.push(i);
+            } return primes;
+        }
+
+        function isPrime(num) {
+            if (num < 2) return false;
+            if (num === 2 || num === 3) return true;
+            if (num % 2 === 0 || num % 3 === 0) return false;
+            let i = 5;
+            while (i * i <= num) {
+                if (num % i === 0 || num % (i + 2) === 0) return false;
+                i += 6;
+            } return true;
         }
         
         document.getElementById("range").addEventListener("keydown",

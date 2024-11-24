@@ -34,11 +34,30 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-
+            answer = findSmallestPermutedMultiple();
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function findSmallestPermutedMultiple() {
+            let x = 1;
+            while (true) {
+                if (
+                    haveSameDigits(x, 2 * x) &&
+                    haveSameDigits(x, 3 * x) &&
+                    haveSameDigits(x, 4 * x) &&
+                    haveSameDigits(x, 5 * x) &&
+                    haveSameDigits(x, 6 * x)
+                ) return x;
+                x++;
+            }
+        }
+
+        function haveSameDigits(a, b) {
+            const sortedA = a.toString().split('').sort().join('');
+            const sortedB = b.toString().split('').sort().join('');
+            return sortedA === sortedB;
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>

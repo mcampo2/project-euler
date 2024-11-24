@@ -41,10 +41,25 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = countFractionsWithLongerNumerators(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function countFractionsWithLongerNumerators(limit) {
+            let numerator = BigInt(3); // Initial numerator for the second iteration
+            let denominator = BigInt(2); // Initial denominator for the second iteration
+            let count = 0;
+            for (let i = 2; i <= limit; i++) {
+                // Update numerator and denominator for the next fraction
+                const newNumerator = numerator + BigInt(2) * denominator;
+                const newDenominator = numerator + denominator;
+                // Check if the numerator has more digits than the denominator
+                if (newNumerator.toString().length > newDenominator.toString().length) count++;
+                // Update for the next iteration
+                numerator = newNumerator;
+                denominator = newDenominator;
+            } return count;
         }
         
         document.getElementById("range").addEventListener("keydown",

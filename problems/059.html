@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XOR Decryption</title>
     <style>
+        a {
+            color: saddlebrown;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
         body {
             width: 30rem;
         }
@@ -55,13 +61,48 @@
     </div>
     <script>
         async function solve() {
-            answer = 0;
-
             const file = await fetch('0059_cipher.txt');
             let text = file.ok ? await file.text() : '';
-
-            console.log(text);
+            text = text.split(',');
+            answer = solveEuler59(text);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function solveEuler59(cipher) {
+            const keys = findKey(cipher);
+            for (const key of keys) {
+                const decrypted = xorDecrypt(cipher, key);
+                const decryptedText = decrypted.map(char => String.fromCharCode(char)).join('');
+                // console.log(`Key: ${key.map(char => String.fromCharCode(char)).join('')}`);
+                console.log(`Decrypted Text: ${decryptedText}`);
+                const asciiSum = decrypted.reduce((sum, char) => sum + char, 0);
+                return asciiSum;
+            }
+        }
+
+        function findKey(cipher) {
+            const keyCandidates = [];
+            const lowercaseStart = 97;
+            const lowercaseEnd = 122;
+            for (let a = lowercaseStart; a <= lowercaseEnd; a++)
+                for (let b = lowercaseStart; b <= lowercaseEnd; b++)
+                    for (let c = lowercaseStart; c <= lowercaseEnd; c++) {
+                        const key = [a, b, c];
+                        const decrypted = xorDecrypt(cipher, key);
+                        if (isEnglishText(decrypted)) keyCandidates.push(key);
+                    }
+            return keyCandidates;
+        }
+
+        function isEnglishText(text) {
+            const string = text.map(char => String.fromCharCode(char)).join('');
+            const commonWords = ['the', 'and', 'to', 'of', 'a', 'in', 'is', 'it', 'that'];
+            return commonWords.every(word => string.includes(word));
+        }
+
+        function xorDecrypt(cipher, key) {
+            const decrypted = cipher.map((char, index) => char ^ key[index % key.length]);
+            return decrypted;
         }
         
         document.getElementById("solve").onclick = solve;

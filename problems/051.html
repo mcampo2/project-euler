@@ -42,22 +42,58 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            range = Math.abs(document.getElementById("range").value);
-            
-            document.getElementById("solution").textContent = answer;
-        }
-
-        document.getElementById("range").addEventListener("keydown",
-            function(event) {
-                if (event.key === "Enter") {
-                    document.getElementById("solve").focus();
-                    solve();
-                }
+                range = Math.abs(document.getElementById("range").value);
+                answer = findSmallestPrimeInFamily(range)
+                document.getElementById("solution").textContent = answer;
             }
-        );
-        
-        document.getElementById("solve").onclick = solve;
+
+            function findSmallestPrimeInFamily(familySize) {
+                const limit = 1000000;
+                const primes = generatePrimes(limit);
+                const primeSet = new Set(primes);
+                for (const prime of primes) {
+                    const digits = prime.toString();
+                    const length = digits.length;
+                    for (let mask = 1; mask < (1 << length); mask++) {
+                        const family = [];
+                        let base = digits.split("");
+                        for (let replacement = 0; replacement < 10; replacement++) {
+                            for (let i = 0; i < length; i++)
+                                if (mask & (1 << i)) base[i] = replacement.toString();
+                            const num = parseInt(base.join(""), 10);
+                            if (num >= prime && primeSet.has(num)) family.push(num);
+                        } if (family.length === familySize) return Math.min(...family);
+                    }
+                } return null;
+            }
+
+            function generatePrimes(limit) {
+                const sieve = Array(limit).fill(true);
+                sieve[0] = sieve[1] = false;
+                for (let i = 2; i * i < limit; i++)
+                    if (sieve[i])
+                        for (let j = i * i; j < limit; j += i)
+                            sieve[j] = false;
+                return sieve.map((isPrime, index) => (isPrime ? index : null)).filter(x => x);
+            }
+
+            function isPrime(num) {
+                    if (num < 2) return false;
+                    for (let i = 2; i * i <= num; i++)
+                        if (num % i === 0) return false;
+                    return true;
+                }
+
+                document.getElementById("range").addEventListener("keydown",
+                    function (event) {
+                        if (event.key === "Enter") {
+                            document.getElementById("solve").focus();
+                            solve();
+                        }
+                    }
+                );
+
+                document.getElementById("solve").onclick = solve;
     </script>
 </body>
 </html>

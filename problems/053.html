@@ -67,12 +67,25 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-
+            answer = countCombinationsExceeding(range)
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function countCombinationsExceeding(limit) {
+            let count = 0;
+            for (let n = 1; n <= 100; n++) {
+                let c = 1;
+                for (let r = 0; r <= n; r++) {
+                    if (r > 0) c = (c * (n - r + 1)) / r;
+                    if (c > limit) {
+                        count += n - 2 * r + 1;
+                        break;
+                    }
+                }
+            } return count;
+        }
+
         document.getElementById("range").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {
