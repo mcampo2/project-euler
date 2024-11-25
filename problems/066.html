@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diophantine Equation</title>
+    <style>
+        body {
+            width: 33rem;
+        }
+
+        div div p {
+            margin: auto;
+            text-align: center;
+        }
+
+        .red {
+            color: red;
+            font-weight: bold;
+        }
+
+        #range {
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Diophantine Equation</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Consider quadratic Diophantine equations of the form:</p>
+        <div><p><i>x</i><sup>2</sup> - <i>Dy</i><sup>2</sup> = 1</p></div>
+        <p>For example, when <i>D</i> = 13, the minimal solution in <i>x</i> is
+           649<sup>2</sup> - 13 x 180<sup>2</sup> = 1.</p>
+        <p>It can be assumed that there are no solutions in positive integers
+           when <i>D</i> is square.</p>
+        <p>By finding minimal solutions in <i>x</i> for <i>D</i> = {2, 3, 5, 6,
+           7}, we obtain the following:</p>
+        <div><p>
+            3<sup>2</sup> - 2 x 2<sup>2</sup> = 1<br>
+            2<sup>2</sup> - 3 x 1<sup>2</sup> = 1<br>
+            <span class="red">9</span><sup>2</sup> - 5 x 4<sup>2</sup> = 1<br>
+            5<sup>2</sup> - 6 x 2<sup>2</sup> = 1<br>
+            8<sup>2</sup> - 7 x 3<sup>2</sup> = 1<br>
+        </p></div>
+        <p>Hence, by considering minimal solutions in <i>x</i> for <i>D</i> ≤ 7,
+           the largest <i>x</i> is obtained when <i>D</i> = 5.</p>
+        <p>Find the value of <i>D</i> ≤ 1000 in minimal solutions of <i>x</i>
+           for which the largest value of <i>x</i> is obtained.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The value of <i>D</i> ≤ <input id="range" type="text" value="1000">
+            in minimal solutions of <i>x</i> for which the largest value of
+            <i>x</i> is obtained is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = Math.abs(document.getElementById("range").value);
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totient Permutation</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+
+        #range {
+            width: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Totient Permutation</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Euler's totient function, <i>ϕ</i>(<i>n</i>) [sometimes called the
+           phi function], is used to determine the number of positive numbers
+           less than or equal to <i>n</i> which are relatively prime to
+           <i>n</i>. For example, as 1, 2, 4, 5, 7, and 8, are all less than
+           nine and relatively prime to nine, <i>ϕ</i>(9) = 6.</p>
+        <p>The number 1 is considered to be relatively prime to every positive
+           number so <i>ϕ</i>(1) = 1.</p>
+        <p>Interestingly, <i>ϕ</i>(87109) = 79180, and it can be seen that 87109
+           is a permutation of 79180.</p>
+        <p>Find the value of <i>n</i>, 1 < <i>n</i> < 10<sup>7</sup>, for which
+           <i>ϕ</i>(<i>n</i>) is a permutation of <i>n</i> and the ratio
+           <i>n</i>/<i>ϕ</i>(<i>n</i>) produces a minimum.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The value of <i>n</i>, 1 < <i>n</i> <
+           10<sup><input id="range" type="text" value="7"></sup>, for which
+           <i>ϕ</i>(<i>n</i>) is a permutation of <i>n</i> and the ratio
+           <i>n</i>/<i>ϕ</i>(<i>n</i>) produces a minimum is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            range = Math.abs(document.getElementById("range").value);
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

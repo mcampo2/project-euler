@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Powerful Digit Counts</title>
+    <style>
+        body {
+            width: 30rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Powerful Digit Counts</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The 5-digit number, 16807 = 7<sup>5</sup>, is also a fifth power.
+           Similarly, the 9-digit number, 134217728 = 8<sup>9</sup>, is a ninth
+           power.</p>
+        <p>How many <i>n</i>-digit positive integers exist which are also an
+           <i>n</i>th power?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The number of <i>n</i>-digit positive integers that exist which are
+           also an <i>n</i>th power is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
