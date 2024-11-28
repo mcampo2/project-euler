@@ -48,10 +48,35 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = solveEuler65(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function solveEuler65(limit) {
+            const terms = getEContinuedFraction(limit);
+            const numerator = computeNumerator(terms);
+            return numerator.toString().split('').map(Number)
+                .reduce((sum, digit) => sum + digit, 0);
+        }
+
+        function getEContinuedFraction(n) {
+            const terms = [2n];
+            let k = 1n;
+            while (terms.length < n) {
+                terms.push(1n);
+                terms.push(2n * k);
+                terms.push(1n);
+                k++;
+            } return terms.slice(0, n);
+        }
+
+        function computeNumerator(terms) {
+            let numerator = 1n;
+            let denominator = terms[terms.length - 1];
+            for (let i = terms.length - 2; i >= 0; i--) {
+                [numerator, denominator] = [denominator, numerator + terms[i] * denominator];
+            } return denominator;
         }
 
         document.getElementById("range").oninput = function(e) {

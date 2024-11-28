@@ -19,7 +19,8 @@
             text-align: center;
         }
 
-        #range {
+        #range_1, #range_2 {
+            text-align: center;
             width: 1rem;
         }
     </style>
@@ -84,20 +85,72 @@
     </div>
     <div>
         <h2>Solution</h2>
-        <p>The maximum <b><input id="range" type="text" value="16">-digit</b>
-           string for a "magic" 5-gon ring is
-           <b><span id="solution">???</span></b>.</p>
+        <p>The maximum <b><input id="range_1" type="text" value="16">-digit</b>
+           string for a "magic" <input id="range_2" type="text" value="5">-gon
+           ring is <b><span id="solution">???</span></b>.</p>
         <button id="solve">Solve</button>
     </div>
     <script>
         function solve() {
-            answer = 0;
-            range = Math.abs(document.getElementById("range").value);
-            
+            digits = Math.abs(document.getElementById("range_1").value);
+            n = Math.abs(document.getElementById("range_2").value);
+            answer = solveMagicNGonRing(n, digits);
             document.getElementById("solution").textContent = answer;
         }
+
+        function solveMagicNGonRing(n, targetDigits) {
+            const numbers = Array.from({ length: 2 * n }, (_, i) => i + 1);
+            const permutations = permute(numbers);
+            let maxString = "";
+            for (const perm of permutations) {
+                if (isMagicRing(perm, n)) {
+                    const stringRep = toStringRepresentation(perm, n);
+                    if (stringRep.length === targetDigits && stringRep > maxString)
+                        maxString = stringRep;
+                }
+            } return maxString;
+        }
+
+        function isMagicRing(arr, k) {
+            const groups = [];
+            for (let i = 0; i < k; i++) {
+                const external = arr[i]; // External node
+                const internal1 = arr[k + i]; // First internal node
+                const internal2 = arr[k + ((i + 1) % k)]; // Next internal node (wrapping around)
+                groups.push([external, internal1, internal2]);
+            } const sums = groups.map((group) => group.reduce((a, b) => a + b));
+            return sums.every((sum) => sum === sums[0]); // Check if all sums are equal
+        }
+
+        function permute(arr) {
+            if (arr.length === 0) return [[]];
+            return arr.flatMap((num, i) =>
+                permute([...arr.slice(0, i), ...arr.slice(i + 1)]).map((perm) => [num, ...perm])
+            );
+        }
+
+        function toStringRepresentation(arr, k) {
+            const groups = [];
+            for (let i = 0; i < k; i++) {
+                const external = arr[i]; // External node
+                const internal1 = arr[k + i]; // First internal node
+                const internal2 = arr[k + ((i + 1) % k)]; // Second internal node (wrapping around)
+                groups.push([external, internal1, internal2]);
+            } const minIndex = groups.reduce(
+                (minIdx, group, idx) => group[0] < groups[minIdx][0] ? idx : minIdx, 0
+            ); const orderedGroups = [...groups.slice(minIndex),...groups.slice(0, minIndex)];
+            return orderedGroups.flat().join("");
+        }
         
-        document.getElementById("range").addEventListener("keydown",
+        document.getElementById("range_1").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("range_2").focus();
+                }
+            }
+        );
+
+        document.getElementById("range_2").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {
                     document.getElementById("solve").focus();

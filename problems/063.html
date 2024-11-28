@@ -30,9 +30,19 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            
+            answer = countNDigitNthPowers();
             document.getElementById("solution").textContent = answer;
+        }
+
+        function countNDigitNthPowers() {
+            let count = 0;
+            for (let n = 1; n < 100; n++) {
+                for (let base = 1; base < 100; base++) {
+                    const power = BigInt(base) ** BigInt(n);
+                    const length = power.toString().length;
+                    if (length === n) count++;
+                }
+            } return count;
         }
         
         document.getElementById("solve").onclick = solve;

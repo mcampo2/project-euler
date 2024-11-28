@@ -66,10 +66,21 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = findMaxN(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findMaxN(limit) {
+            // Start with the first prime
+            let primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]; // Prime numbers
+            let result = 1; // The product of primes
+            // Multiply primes until the product exceeds the limit
+            for (let prime of primes) {
+                if (result * prime > limit) {
+                    break;
+                } result *= prime;
+            } return result;
         }
         
         document.getElementById("range").addEventListener("keydown",

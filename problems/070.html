@@ -43,10 +43,42 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = findMinRatio(10 ** range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findMinRatio(limit) {
+            const phi = computeTotient(limit);
+            let minRatio = Infinity;
+            let result = -1;
+            for (let n = 2; n <= limit; n++) {
+                if (isPermutation(n, phi[n])) {
+                    const ratio = n / phi[n];
+                    if (ratio < minRatio) {
+                        minRatio = ratio;
+                        result = n;
+                    }
+                }
+            } return result;
+        }
+
+        function computeTotient(limit) {
+            const phi = Array.from({ length: limit + 1 }, (_, i) => i);
+            for (let i = 2; i <= limit; i++) {
+                if (phi[i] === i) { // i is a prime number
+                    for (let j = i; j <= limit; j += i) {
+                        phi[j] *= (i - 1);
+                        phi[j] /= i;
+                    }
+                }
+            } return phi;
+        }
+
+        function isPermutation(a, b) {
+            const sortedA = a.toString().split('').sort().join('');
+            const sortedB = b.toString().split('').sort().join('');
+            return sortedA === sortedB;
         }
         
         document.getElementById("range").addEventListener("keydown",

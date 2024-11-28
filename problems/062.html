@@ -35,10 +35,24 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = solveProjectEuler62(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function solveProjectEuler62(num_permutations) {
+            const cubeMap = new Map();
+            let n = 1;
+            while (true) {
+                const cube = n ** 3;
+                const sortedDigits = String(cube).split('').sort().join('');
+                if (!cubeMap.has(sortedDigits))
+                    cubeMap.set(sortedDigits, []);
+                cubeMap.get(sortedDigits).push(cube);
+                if (cubeMap.get(sortedDigits).length === num_permutations)
+                    return Math.min(...cubeMap.get(sortedDigits));
+                n++;
+            }
         }
         
         document.getElementById("range").addEventListener("keydown",

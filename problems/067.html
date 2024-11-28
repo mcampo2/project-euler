@@ -54,12 +54,30 @@
     </div>
     <script>
         async function solve() {
-            answer = 0;
-            const file = await fetch('0059_cipher.txt');
+            const file = await fetch('0067_triangle.txt');
             let text = file.ok ? await file.text() : '';
-            text = text.split(' ');
-            
+            text = text.split('\n').filter(str => str !== '')
+                .map(str => str.split(" ")).map(row => row.map(Number));
+            answer = findMaxPathSum(text);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findMaxPathSum(triangle) {
+            for (let row = triangle.length - 2; row >= 0; row--)
+                for (let col = 0; col < triangle[row].length; col++)
+                    triangle[row][col] += Math.max(triangle[row + 1][col], triangle[row + 1][col + 1]);
+            return triangle[0][0];
+        }
+
+        function convertToTriangle(numbers) {
+            numbers2 = numbers.slice();
+            const triangle = [];
+            let rowIndex = 0;
+            while (numbers2.length > 0) {
+                const row = numbers2.splice(0, rowIndex + 1);
+                triangle.push(row);
+                rowIndex++;
+            } return triangle;
         }
 
         document.getElementById("solve").onclick = solve;

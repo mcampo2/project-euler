@@ -80,9 +80,63 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
-            
+            answer = solveProjectEuler61();
             document.getElementById("solution").textContent = answer;
+        }
+
+        function solveProjectEuler61() {
+            const min = 1000;
+            const max = 9999;
+            const figurates = [
+                generateFigurateNumbers(3, min, max),
+                generateFigurateNumbers(4, min, max),
+                generateFigurateNumbers(5, min, max),
+                generateFigurateNumbers(6, min, max),
+                generateFigurateNumbers(7, min, max),
+                generateFigurateNumbers(8, min, max),
+            ];
+            for (let i = 0; i < figurates.length; i++) {
+                for (const num of figurates[i]) {
+                    const result = findCyclicSet(figurates, [num], { [i]: true });
+                    if (result) {
+                        const sum = result.reduce((a, b) => a + b, 0);
+                        return sum;
+                    }
+                }
+            } return null;
+        }
+
+        function findCyclicSet(figurates, currentSet, usedTypes) {
+            if (currentSet.length === 6) {
+                if (isCyclic(currentSet[currentSet.length - 1], currentSet[0])) {
+                    return currentSet;
+                } return null;
+            }
+            const lastNumber = currentSet[currentSet.length - 1];
+            for (let i = 0; i < figurates.length; i++) {
+                if (usedTypes[i]) continue;
+                for (const num of figurates[i]) {
+                    if (isCyclic(lastNumber, num)) {
+                        const result = findCyclicSet(figurates, [...currentSet, num], { ...usedTypes, [i]: true });
+                        if (result) return result;
+                    }
+                }
+            } return null;
+        }
+
+        function isCyclic(a, b) {
+            return String(a).slice(2) === String(b).slice(0, 2);
+        }
+
+        function generateFigurateNumbers(n, min, max) {
+            const numbers = [];
+            let k = 1;
+            while (true) {
+                const num = (k * ((n - 2) * k - (n - 4))) / 2;
+                if (num > max) break;
+                if (num >= min) numbers.push(num);
+                k++;
+            } return numbers;
         }
         
         document.getElementById("solve").onclick = solve;

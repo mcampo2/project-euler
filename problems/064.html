@@ -66,12 +66,41 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
             range = Math.abs(document.getElementById("range").value);
-            
+            answer = countOddPeriodContinuedFractions(range);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function countOddPeriodContinuedFractions(limit) {
+            let count = 0;
+            for (let n = 2; n <= limit; n++)
+                if (!isSquare(n) && continuedFractionPeriodLength(n) % 2 === 1)
+                    count++;
+            return count;
+        }
+
+        function continuedFractionPeriodLength(n) {
+            const sqrtN = Math.sqrt(n);
+            const a0 = Math.floor(sqrtN);
+            if (a0 * a0 === n) return 0;
+            let m = 0;
+            let d = 1;
+            let a = a0;
+            let period = 0;
+            do {
+                m = d * a - m;
+                d = (n - m * m) / d;
+                a = Math.floor((a0 + m) / d);
+                period++;
+            } while (a !== 2 * a0);
+            return period;
+        }
+
+        function isSquare(n) {
+            const sqrt = Math.sqrt(n);
+            return sqrt === Math.floor(sqrt);
+        }
+
         document.getElementById("range").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {
