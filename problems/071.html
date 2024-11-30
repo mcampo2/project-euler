@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordered Fractions</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div p {
+            margin: auto;
+            text-align: center;
+        }
+
+        span {
+            align-items: center;
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+        }
+
+        span span {
+            display: block;
+            font-size: smaller;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ordered Fractions</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Consider the fraction, <span><span><u><i>n</i></u></span>
+           <span><i>d</i></span></span>, where <i>n</i> and
+           <i>d</i> are positive integers. If <i>n</i> < <i>d</i> and
+           HCF(<i>n</i>, <i>d</i>) = 1, it is called a reduced
+           proper fraction.</p>
+        <p>If we list the set of reduced proper fractions for <i>d</i> ≤ 8 in
+           ascending order of size, we get:</p>
+        <div><p>
+            <span><span><u>1</u></span><span><i>8</i></span></span> ,
+            <span><span><u>1</u></span><span><i>7</i></span></span> ,
+            <span><span><u>1</u></span><span><i>6</i></span></span> ,
+            <span><span><u>1</u></span><span><i>5</i></span></span> ,
+            <span><span><u>1</u></span><span><i>4</i></span></span> ,
+            <span><span><u>2</u></span><span><i>7</i></span></span> ,
+            <span><span><u>1</u></span><span><i>3</i></span></span> ,
+            <span><span><u>3</u></span><span><i>8</i></span></span> ,
+            <b><span><span><u>2</u></span><span><i>5</i></span></span></b> ,
+            <span><span><u>3</u></span><span><i>7</i></span></span> ,
+            <span><span><u>1</u></span><span><i>2</i></span></span> ,
+            <span><span><u>4</u></span><span><i>7</i></span></span> ,
+            <span><span><u>3</u></span><span><i>5</i></span></span> ,
+            <span><span><u>5</u></span><span><i>8</i></span></span> ,
+            <span><span><u>2</u></span><span><i>3</i></span></span> ,
+            <span><span><u>5</u></span><span><i>7</i></span></span> ,
+            <span><span><u>3</u></span><span><i>4</i></span></span> ,
+            <span><span><u>4</u></span><span><i>5</i></span></span> ,
+            <span><span><u>5</u></span><span><i>6</i></span></span> ,
+            <span><span><u>6</u></span><span><i>7</i></span></span> ,
+            <span><span><u>7</u></span><span><i>8</i></span></span>
+        </p></div>
+        <p>It can be seen that <span><span><u>2</u></span>
+           <span><i>5</i></span></span> is the fraction immediately to the left
+           of <span><span><u>3</u></span><span><i>7</i></span></span>.</p>
+        <p>By listing the set of reduced proper fractions for <i>d</i> ≤ 1000000
+           in ascending order of size, find the numerator of the fraction
+           immediately to the left of <span><span><u>3</u></span>
+           <span><i>7</i></span></span>.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The numerator of the fraction immediately to the left of
+           <span><span><u>3</u></span><span><i>7</i></span></span>
+           for the set of reduced proper fractions of
+           <span><span><u><i>n</i></u></span><span><i>d</i></span></span>
+           where <i>d</i> ≤ <input id="range" type="text" value="1000000"> is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Root Digital Expansion</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        input {
+            text-align: center;
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Square Root Digital Expansion</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>It is well known that if the square root of a natural number is not
+           an integer, then it is irrational. The decimal expansion of such
+           square roots is infinite without any repeating pattern at all.</p>
+        <p>The square root of two is 1.41421356237309504880⋯, and the digital
+           sum of the first one hundred decimal digits is 475.</p>
+        <p>For the first one hundred natural numbers, find the total of the
+           digital sums of the first one hundred decimal digits for all the
+           irrational square roots.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>For the first <input id="range_1" type="text" value="100">
+           natural numbers, the total of the digital sums of the
+           first <input id="range_2" type="text" value="100">
+           decimal digits for all the irrational square roots is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range1 = Math.abs(document.getElementById("range_1").value);
+            range2 = Math.abs(document.getElementById("range_2").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range_1").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("range_2").focus();
+                }
+            }
+        );
+
+        document.getElementById("range_2").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

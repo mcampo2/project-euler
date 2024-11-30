@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digit Factorial Chains</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div {
+            display: flex;
+            justify-content: center;
+            margin: auto;
+            width: 100%;
+        }
+
+        #range_1 {
+            width: 3.5rem;
+        }
+
+        #range_2 {
+            width: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Digit Factorial Chains</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The number 145 is well known for the property that the sum of the
+           factorial of its digits is equal to 145:</p>
+        <p><div>1! + 4! + 5! = 1 + 24 + 120 = 145.</div></p>
+        <p>Perhaps less well known is 169, in that it produces the longest chain
+           of numbers that link back to 169; it turns out that there are only
+           three such loops that exist:</p>
+        <p><div>
+            169 → 363601 → 1454 → 169<br>
+            871 → 45361 → 871<br>
+            872 → 45362 → 872<br>
+        </div></p>
+        <p>It is not difficult to prove that EVERY starting number will
+           eventually get stuck in a loop. For example,</p>
+        <p><div>
+            69 → 363600 → 1454 → 169 → 363601(→ 1454)<br>
+            78 → 45360 → 871 → 45361(→ 871)<br>
+            540 → 145(→ 145)<br>
+        </div></p>
+        <p>Starting with 69 produces a chain of five non-repeating terms, but
+           the longest non-repeating chain with a starting number below one
+           million is sixty terms.</p>
+        <p>How many chains, with a starting number below one million, contain
+           exactly sixty non-repeating terms?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The number of chains, with a starting number below
+           <input id="range_1" type="text" value="1000000">,
+           that contain exactly <input id="range_2" type="text" value="60">
+           non-repeating terms is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range1 = Math.abs(document.getElementById("range_1").value);
+            range2 = Math.abs(document.getElementById("range_2").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range_1").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("range_2").focus();
+                }
+            }
+        );
+
+        document.getElementById("range_2").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

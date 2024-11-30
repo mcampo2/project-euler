@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Summations</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div p {
+            display: flex;
+            justify-content: center;
+            margin: auto;
+            width: 100%;
+        }
+
+        #range {
+            width: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prime Summations</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>It is possible to write ten as the sum of primes in exactly five
+           different ways:</p>
+        <div><p>
+            7 + 3<br>
+            5 + 5<br>
+            5 + 3 + 2<br>
+            3 + 3 + 2 + 2<br>
+            2 + 2 + 2 + 2
+        </p></div>
+        <p>What is the first value which can be written as the sum of primes in
+           over five thousand different ways?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The first value which can be written as the sum of primes in over
+           <input id="range" type="text" value="5000"> different ways is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

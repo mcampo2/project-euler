@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Summations</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div p {
+            display: flex;
+            justify-content: center;
+            margin: auto;
+            width: 100%;
+        }
+
+        #range {
+            width: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Counting Summations</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>It is possible to write five as a sum in exactly six
+           different ways:</p>
+        <div><p>
+            4 + 1<br>
+            3 + 2<br>
+            3 + 1 + 1<br>
+            2 + 2 + 1<br>
+            2 + 1 + 1 + 1<br>
+            1 + 1 + 1 + 1 + 1
+        </p></div>
+        <p>How many different ways can one hundred be written as a sum of at
+           least two positive integers?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The number of different ways
+           <input id="range" type="text" value="100"> can be
+           written as a sum of at least two positive integers is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

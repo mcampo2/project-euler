@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singular Integer Right Triangles</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div {
+            margin: auto;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Singular Integer Right Triangles</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>It turns out that 12 cm is the smallest length of wire that can be
+           bent to form an integer sided right angle triangle in exactly one
+           way, but there are many more examples.</p>
+        <ul>
+            <li><b>12 cm</b>: (3, 4, 5)</li>
+            <li><b>24 cm</b>: (6, 8, 10)</li>
+            <li><b>30 cm</b>: (5, 12, 13)</li>
+            <li><b>36 cm</b>: (9, 12, 15)</li>
+            <li><b>40cm</b>: (8, 15, 17)</li>
+            <li><b>48cm</b>: (12, 16, 20)</li>
+        </ul>
+        <p>In contrast, some lengths of wire, like 20 cm, cannot be bent to form
+           an integer sided right angle triangle, and other lengths allow more
+           than one solution to be found; for example, using 120 cm it is
+           possible to form exactly three different integer sided right angle
+           triangles.</p>
+        <div><b>120 cm</b>: (30, 40, 50), (20, 48, 52), (24, 45, 51)</div>
+        <p>Given that <i>L</i> is the length of the wire, for how many values of
+           <i>L</i> ≤ 1500000 can exactly one integer sided right angle triangle
+           be formed?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>For <i>L</i> ≤ <input id="range" type="text" value="1500000">,
+           the number of exactly one integer sided right angle triangles that
+           can be formed is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passcode Derivation</title>
+    <style>
+        a {
+            color: saddlebrown;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        body {
+            width: 35rem;
+        }
+
+        #range {
+            width: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Passcode Derivation</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>A common security method used for online banking is to ask the user
+           for three random characters from a passcode. For example, if the
+           passcode was 531278, they may ask for the 2nd, 3rd, and 5th
+           characters; the expected reply would be: 317.</p>
+        <p>The text file, <a href="0079_keylog.txt">keylog.txt</a>, contains
+           fifty successful login attempts.</p>
+        <p>Given that the three characters are always asked for in order,
+           analyse the file so as to determine the shortest possible secret
+           passcode of unknown length.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The shortest possible secret passcode of unknown length is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        async function solve() {
+            const file = await fetch('0079_keylog.txt');
+            let text = file.ok ? await file.text() : '';
+            text = text.split('\n').filter(line => line.length > 0);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
