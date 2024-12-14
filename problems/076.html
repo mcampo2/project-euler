@@ -50,10 +50,23 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = numberOfWays(range);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function numberOfWays(targetSum) {
+            // Create an array to store the ways to form sums
+            let ways = new Array(targetSum + 1).fill(0);
+            // Base case: there is one way to form 0, using no numbers
+            ways[0] = 1;
+            // Iterate over all possible numbers that can be used in the sum
+            for (let num = 1; num < targetSum; num++) {
+                for (let sum = num; sum <= targetSum; sum++) {
+                    ways[sum] += ways[sum - num];
+                }
+            } return ways[targetSum];
+        }
+
         document.getElementById("range").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {

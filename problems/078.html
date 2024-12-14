@@ -49,8 +49,30 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = findFirstPartition(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findFirstPartition(MOD) {
+            // const MOD = 1000000; // The modulo constraint
+            const partitions = [1]; // Base case: p(0) = 1
+            for (let n = 1; ; n++) {
+                let partition = 0;
+                // Generalized pentagonal number theory
+                for (let k = 1; ; k++) {
+                    const pent1 = (k * (3 * k - 1)) / 2; // Generalized pentagonal number (positive k)
+                    const pent2 = (k * (3 * k + 1)) / 2; // Generalized pentagonal number (negative k)
+                    if (pent1 > n) break;
+                    const sign = k % 2 === 0 ? -1 : 1; // Alternating signs
+                    partition += sign * partitions[n - pent1];
+                    if (pent2 <= n) {
+                        partition += sign * partitions[n - pent2];
+                    } partition %= MOD;
+                } partitions.push((partition + MOD) % MOD); // Store p(n) modulo 10^6
+                if (partitions[n] === 0) {
+                    return n; // Return the first n for which p(n) is divisible by 10^6
+                }
+            }
         }
         
         document.getElementById("range").addEventListener("keydown",

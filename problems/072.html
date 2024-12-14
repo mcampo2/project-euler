@@ -81,9 +81,24 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = countReducedProperFractions(range);
             document.getElementById("solution").textContent = answer;
         }
+
+        function countReducedProperFractions(limit) {
+            let phi = Array.from({ length: limit + 1 }, (_, i) => i);
+            for (let i = 2; i <= limit; i++) {
+                if (phi[i] === i)
+                    for (let j = i; j <= limit; j += i) {
+                        phi[j] *= (i - 1);
+                        phi[j] /= i;
+                    }
+            } let count = 0;
+            for (let i = 2; i <= limit; i++) {
+                count += phi[i];
+            } return count;
+        }
+
         
         document.getElementById("range").addEventListener("keydown",
             function(event) {

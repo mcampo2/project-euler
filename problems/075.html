@@ -59,10 +59,34 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = countUniqueTriangles(range);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function countUniqueTriangles(limit) {
+            const counts = new Array(limit + 1).fill(0);
+            // Generate all primitive Pythagorean triples
+            for (let m = 2; m * m < limit; m++) {
+                for (let n = 1; n < m; n++) {
+                    if ((m - n) % 2 === 1 && gcd(m, n) === 1) {
+                        const p = 2 * m * (m + n);
+                        if (p > limit) break;
+                        // Scale the primitive triple
+                        for (let k = 1; k * p <= limit; k++) {
+                            counts[k * p]++;
+                        }
+                    }
+                }
+            } // Count perimeters with exactly one triangle
+            return counts.filter(count => count === 1).length;
+        }
+
+        function gcd(a, b) {
+            while (b !== 0) {
+                [a, b] = [b, a % b];
+            } return a;
+        }
+
         document.getElementById("range").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {

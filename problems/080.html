@@ -42,10 +42,36 @@
         function solve() {
             range1 = Math.abs(document.getElementById("range_1").value);
             range2 = Math.abs(document.getElementById("range_2").value);
-            answer = 0;
+            answer = sumOfSquareRootDigits(range1, range2);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function sumOfSquareRootDigits(limit, precision) {
+            let totalSum = 0;
+            for (let n = 1; n <= limit; n++) {
+                const sqrt = Math.sqrt(n);
+                if (Number.isInteger(sqrt)) continue; // Skip perfect squares
+                const sqrtValue = sqrtBigInt(BigInt(n), precision + 10); // Compute square root with extra precision
+                totalSum += digitSum(sqrtValue, precision); // Sum up the first `precision` digits
+            } return totalSum;
+        }
+
+        function sqrtBigInt(n, precision) {
+            const one = BigInt(10) ** BigInt(precision * 2); // Precision as integer scale
+            let x = one;
+            while (true) {
+                const nextX = (x + (n * one) / x) / BigInt(2);
+                if (x === nextX || x === nextX + BigInt(1)) break;
+                x = nextX;
+            } return x;
+        }
+
+        function digitSum(sqrtValue, precision) {
+            const strValue = sqrtValue.toString();
+            const fullDigits = strValue.slice(0, precision); // First `precision` digits
+            return fullDigits.split('').reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+        }
+
         document.getElementById("range_1").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {

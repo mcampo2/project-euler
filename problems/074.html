@@ -66,10 +66,56 @@
         function solve() {
             range1 = Math.abs(document.getElementById("range_1").value);
             range2 = Math.abs(document.getElementById("range_2").value);
-            answer = 0;
+            answer = countFactorialDigitChainsWithNTerms(range1, range2);
             document.getElementById("solution").textContent = answer;
         }
         
+        function countFactorialDigitChainsWithNTerms(limit, terms) {
+            const cache = new Map();
+            let count = 0;
+            for (let i = 1; i < limit; i++) {
+                if (calculateChainLength(i, cache) === terms) {
+                    count++;
+                }
+            } return count;
+        }
+
+        function calculateChainLength(start, cache) {
+            let current = start;
+            const seen = [];
+            const visited = new Set();
+            while (!visited.has(current)) {
+                if (cache.has(current)) {
+                    // If already cached, add remaining chain length
+                    const totalLength = seen.length + cache.get(current);
+                    // Cache all numbers in the current sequence
+                    seen.forEach((num, index) => cache.set(num, totalLength - index));
+                    return totalLength;
+                } // Mark the number as visited
+                visited.add(current);
+                seen.push(current);
+                current = factorialDigitSum(current);
+            } // A loop is detected; determine its start and length
+            const loopStart = seen.indexOf(current);
+            const loopLength = seen.length - loopStart;
+            // Cache the loop
+            for (let i = loopStart; i < seen.length; i++) cache.set(seen[i], loopLength);
+            // Cache the non-loop portion
+            for (let i = 0; i < loopStart; i++) cache.set(seen[i], seen.length - i);
+            return seen.length;
+        }
+
+
+        function factorialDigitSum(n) {
+            return n.toString().split('').reduce((sum, digit) => sum + factorials[parseInt(digit, 10)], 0);
+        }
+
+        const factorials = Array.from({ length: 10 }, (_, i) => {
+            let fact = 1;
+            for (let j = 2; j <= i; j++) fact *= j;
+            return fact;
+        });
+
         document.getElementById("range_1").addEventListener("keydown",
             function(event) {
                 if (event.key === "Enter") {

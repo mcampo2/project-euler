@@ -48,8 +48,41 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = findFirstNumber(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findFirstNumber(limit) {
+            const primes = generatePrimes(limit);
+            const ways = Array(limit).fill(0);
+            ways[0] = 1; // There's one way to make 0 (with no primes)
+            // Update the ways array for each prime
+            for (const prime of primes) {
+                for (let i = prime; i < limit; i++) {
+                    ways[i] += ways[i - prime];
+                }
+            } // Find the first number with more than 5000 ways
+            for (let n = 0; n < limit; n++) {
+                if (ways[n] > 5000) return n;
+            } return -1; // Not found within the limit
+        }
+
+        function generatePrimes(limit) {
+            const sieve = Array(limit).fill(true);
+            sieve[0] = sieve[1] = false; // 0 and 1 are not primes
+            for (let i = 2; i * i < limit; i++) {
+                if (sieve[i]) {
+                    for (let j = i * i; j < limit; j += i) {
+                        sieve[j] = false;
+                    }
+                }
+            } // Collect primes
+            const primes = [];
+            for (let i = 2; i < limit; i++) {
+                if (sieve[i]) {
+                    primes.push(i);
+                }
+            } return primes;
         }
         
         document.getElementById("range").addEventListener("keydown",

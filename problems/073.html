@@ -88,7 +88,7 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = countFractionsInRange(range, 1 / 3, 1 / 2);
             document.getElementById("solution").textContent = answer;
         }
         
@@ -100,6 +100,22 @@
                 }
             }
         );
+
+        function countFractionsInRange(limit, lowerBound, upperBound) {
+            let count = 0;
+            for (let d = 2; d <= limit; d++)
+                for (let n = Math.floor(d * lowerBound) + 1; n < Math.ceil(d * upperBound); n++)
+                    if (gcd(n, d) === 1) count++;
+            return count;
+        }
+
+        function gcd(a, b) {
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            } return a;
+        }
         
         document.getElementById("solve").onclick = solve;
     </script>

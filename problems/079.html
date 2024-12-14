@@ -46,8 +46,60 @@
             const file = await fetch('0079_keylog.txt');
             let text = file.ok ? await file.text() : '';
             text = text.split('\n').filter(line => line.length > 0);
-            answer = 0;
+            answer = solveProjectEuler79(text);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function deriveShortestPasscode(attempts) {
+            // The given list of login attempts
+            // const attempts = [
+            //     "319", "680", "180", "690", "129", "620",
+            //     "762", "689", "762", "318", "368", "710",
+            //     "720", "710", "629", "168", "160", "689",
+            //     "716", "731", "736", "729", "316", "729",
+            //     "729", "710", "769", "290", "719", "680",
+            //     "318", "389", "162", "289", "162", "718",
+            //     "729", "319", "790", "680", "890", "362",
+            //     "319", "760", "316", "729", "380", "319",
+            //     "728", "716"
+            // ];
+            // Create a directed graph of constraints
+            const graph = {};
+            for (const attempt of attempts) {
+                for (let i = 0; i < attempt.length; i++) {
+                    if (!graph[attempt[i]]) {
+                        graph[attempt[i]] = new Set();
+                    }
+                    for (let j = i + 1; j < attempt.length; j++) {
+                        graph[attempt[i]].add(attempt[j]);
+                    }
+                }
+            } // Topological sort function
+            const topologicalSort = (graph) => {
+                const visited = new Set();
+                const result = [];
+                const visiting = new Set();
+                const visit = (node) => {
+                    if (visited.has(node)) return;
+                    if (visiting.has(node)) throw new Error("Cycle detected");
+                    visiting.add(node);
+                    if (graph[node]) {
+                        for (const neighbor of graph[node]) {
+                            visit(neighbor);
+                        }
+                    } visiting.delete(node);
+                    visited.add(node);
+                    result.push(node);
+                };
+                for (const node in graph) {
+                    if (!visited.has(node)) {
+                        visit(node);
+                    }
+                } return result.reverse();
+            }; // Perform topological sort on the graph
+            const sortedDigits = topologicalSort(graph);
+            // Join the sorted digits to form the passcode
+            return sortedDigits.join("");
         }
         
         document.getElementById("solve").onclick = solve;

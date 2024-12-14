@@ -87,7 +87,19 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            const targetNumerator = 3;
+            const targetDenominator = 7;
+            const maxDenominator = range;
+            let closestNumerator = 0;
+            let closestDenominator = 1;
+            for (let denominator = 2; denominator <= maxDenominator; denominator++) {
+                let numerator = Math.floor((denominator * targetNumerator) / targetDenominator);
+                if (numerator * targetDenominator === denominator * targetNumerator) numerator--;
+                if (numerator * closestDenominator > closestNumerator * denominator) {
+                    closestNumerator = numerator;
+                    closestDenominator = denominator;
+                }
+            } answer = closestNumerator;
             document.getElementById("solution").textContent = answer;
         }
         
