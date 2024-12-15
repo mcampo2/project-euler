@@ -70,8 +70,23 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = projectEuler88(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function projectEuler88(limit = 12000) {
+            const minProductSumNumbers = Array(limit + 1).fill(Infinity);
+            function findProductSumNumbers(product, sum, count, start) {
+                const n = product - sum + count;
+                if (n > limit) return;
+                if (product < minProductSumNumbers[n]) {
+                    minProductSumNumbers[n] = product;
+                } for (let i = start; i <= limit * 2 / product; i++) {
+                    findProductSumNumbers(product * i, sum + i, count + 1, i);
+                }
+            } findProductSumNumbers(1, 0, 0, 2);
+            const uniqueNumbers = new Set(minProductSumNumbers.slice(2));
+            return Array.from(uniqueNumbers).reduce((a, b) => a + b, 0);
         }
 
         document.getElementById("range").addEventListener("keydown",

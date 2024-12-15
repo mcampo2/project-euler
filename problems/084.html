@@ -96,20 +96,104 @@
         <button id="solve">Solve</button>
     </div>
     <script>
+        const NUM_SQUARES = 40;
+        const NUM_SIMULATIONS = 1000000;
+        let SIDES = 4; // Number of sides on the dice
+
+        let chanceIndex = 0;
+        let communityChestIndex = 0;
+        let doublesCount = 0;
+
         function solve() {
-            range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            SIDES = Math.abs(document.getElementById("range").value);
+            answer = main();
             document.getElementById("solution").textContent = answer;
         }
 
-        document.getElementById("range").addEventListener("keydown",
-            function(event) {
-                if (event.key === "Enter") {
-                    document.getElementById("solve").focus();
-                    solve();
+        function main() {
+            const boardVisits = Array(NUM_SQUARES).fill(0);
+            const chanceDeck = [0, 10, 11, 24, 39, 5, 'R', 'R', 'U', -3, null, null, null, null, null, null];
+            const communityChestDeck = [0, 10, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+            shuffle(chanceDeck);
+            shuffle(communityChestDeck);
+            simulateGame(boardVisits, communityChestDeck, chanceDeck);
+            // Find the most visited squares
+            const results = boardVisits
+                .map((visits, index) => ({ index, visits }))
+                .sort((a, b) => b.visits - a.visits);
+            // console.log('Most visited squares:', results.slice(0, 10));
+            // console.log('Modal string:', modalString(results));
+            return modalString(results);
+        }
+
+        function modalString(results) { 
+            return results.slice(0, 3).map(({ index }) => index.toString().padStart(2, '0')).join('');
+        }
+
+        function rollDice(sides) {
+            const die1 = Math.floor(Math.random() * sides) + 1;
+            const die2 = Math.floor(Math.random() * sides) + 1;
+            return { die1, die2, sum: die1 + die2, isDouble: die1 === die2 };
+        }
+
+        function nextRailroad(position) {
+            if (position < 5 || position >= 35) return 5;
+            if (position < 15) return 15;
+            if (position < 25) return 25;
+            return 35;
+        }
+
+        function nextUtility(position) {
+            if (position < 12 || position >= 28) return 12;
+            return 28;
+        }
+
+        function handleSpecialSquares(position, communityChestDeck, chanceDeck) {
+            // Community Chest
+            if ([2, 17, 33].includes(position)) {
+                const card = communityChestDeck[communityChestIndex];
+                communityChestIndex = (communityChestIndex + 1) % communityChestDeck.length;
+                if (card !== null) return card;
+            } // Chance
+            if ([7, 22, 36].includes(position)) {
+                const card = chanceDeck[chanceIndex];
+                chanceIndex = (chanceIndex + 1) % chanceDeck.length;
+                if (typeof card === 'number') return card;
+                if (card === 'R') return nextRailroad(position);
+                if (card === 'U') return nextUtility(position);
+                if (card === -3) return (position - 3 + NUM_SQUARES) % NUM_SQUARES;
+            } // Go to Jail
+            if (position === 30) return 10;
+            return position;
+        }
+
+        function simulateGame(boardVisits, communityChestDeck, chanceDeck) {
+            let position = 0;
+            for (let i = 0; i < NUM_SIMULATIONS; i++) {
+                const { die1, die2, sum, isDouble } = rollDice(SIDES);
+                if (isDouble) {
+                    doublesCount++;
+                    if (doublesCount === 3) {
+                        position = 10; // Go to Jail
+                        doublesCount = 0;
+                        boardVisits[position]++;
+                        continue;
+                    }
+                } else {
+                    doublesCount = 0;
                 }
+                position = (position + sum) % NUM_SQUARES;
+                position = handleSpecialSquares(position, communityChestDeck, chanceDeck);
+                boardVisits[position]++;
             }
-        );
+        }
+
+        function shuffle(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+        }
         
         document.getElementById("solve").onclick = solve;
     </script>

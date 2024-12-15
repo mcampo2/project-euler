@@ -46,8 +46,41 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = projectEuler87(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function projectEuler87(limit) {
+            const primeLimit = Math.floor(Math.sqrt(limit));
+            const primes = generatePrimes(primeLimit);
+            const numbers = new Set();
+            for (const p2 of primes) {
+                const square = p2 ** 2;
+                if (square >= limit) break;
+                for (const p3 of primes) {
+                    const cube = p3 ** 3;
+                    if (square + cube >= limit) break;
+                    for (const p4 of primes) {
+                        const fourth = p4 ** 4;
+                        if (square + cube + fourth >= limit) break;
+                        numbers.add(square + cube + fourth);
+                    }
+                }
+            } return numbers.size;
+        }
+
+        function generatePrimes(limit) {
+            const primes = [];
+            for (let i = 2; i <= limit; i++) {
+                if (isPrime(i)) primes.push(i);
+            } return primes;
+        }
+
+        function isPrime(n) {
+            if (n < 2) return false;
+            for (let i = 2; i * i <= n; i++) {
+                if (n % i === 0) return false;
+            } return true;
         }
 
         document.getElementById("range").addEventListener("keydown",

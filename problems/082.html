@@ -103,8 +103,38 @@
             const file = await fetch('0082_matrix.txt');
             let text = file.ok ? await file.text() : '';
             text = text.split('\n').filter(line => line.length > 0).map(line => line.split(','));
-            answer = 0;
+            answer = minimalPathSum(text);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function minimalPathSum(matrix) {
+            const rows = matrix.length;
+            const cols = matrix[0].length;
+            // Convert matrix values to BigInt for large numbers
+            const bigMatrix = matrix.map(row => row.map(BigInt));
+            // Create a 1D array for storing minimum path sums for the current column
+            let dp = Array(rows).fill(0n);
+            // Initialize dp with the last column of the matrix
+            for (let row = 0; row < rows; row++) {
+                dp[row] = bigMatrix[row][cols - 1];
+            } // Process columns from right to left
+            for (let col = cols - 2; col >= 0; col--) {
+                // Create a new dp array for the current column
+                const newDp = Array(rows).fill(0n);
+                // Fill newDp with minimum values, moving downwards
+                newDp[0] = bigMatrix[0][col] + dp[0];
+                for (let row = 1; row < rows; row++) {
+                    newDp[row] = bigMatrix[row][col] + 
+                        (newDp[row - 1] < dp[row] ? newDp[row - 1] : dp[row]);
+                } // Update newDp with minimum values, moving upwards
+                for (let row = rows - 2; row >= 0; row--) {
+                    newDp[row] = newDp[row] < (bigMatrix[row][col] + newDp[row + 1])
+                        ? newDp[row]
+                        : bigMatrix[row][col] + newDp[row + 1];
+                } // Set dp to the newDp array
+                dp = newDp;
+            } // The result is the minimum value in the first column
+            return dp.reduce((min, value) => (value < min ? value : min), dp[0]).toString();
         }
         
         document.getElementById("solve").onclick = solve;

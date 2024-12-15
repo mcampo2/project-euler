@@ -103,8 +103,48 @@
             const file = await fetch('0083_matrix.txt');
             let text = file.ok ? await file.text() : '';
             text = text.split('\n').filter(line => line.length > 0).map(line => line.split(','));
-            answer = 0;
+            answer = minimalPathSum(text);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function minimalPathSum(matrix) {
+            const rows = matrix.length;
+            const cols = matrix[0].length;
+            // Convert matrix values to BigInt for large numbers
+            const bigMatrix = matrix.map(row => row.map(BigInt));
+            // Directions for moving (row, col): down, up, right, left
+            const directions = [
+                [1, 0],  // Down
+                [-1, 0], // Up
+                [0, 1],  // Right
+                [0, -1]  // Left
+            ];
+            // Priority queue for Dijkstra's algorithm
+            const pq = [];
+            pq.push({ row: 0, col: 0, cost: bigMatrix[0][0] });
+            // Cost array to store minimum cost to each cell
+            const cost = Array.from({ length: rows }, () => Array(cols).fill(Infinity));
+            cost[0][0] = bigMatrix[0][0];
+            while (pq.length > 0) {
+                // Extract the node with the smallest cost
+                pq.sort((a, b) => (a.cost < b.cost ? -1 : 1)); // Priority queue: smallest cost first
+                const { row, col, cost: currentCost } = pq.shift();
+                // Explore all possible directions
+                for (const [dr, dc] of directions) {
+                    const newRow = row + dr;
+                    const newCol = col + dc;
+                    // Ensure the move is within bounds
+                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+                        const newCost = currentCost + bigMatrix[newRow][newCol];
+                        // Update cost and push to priority queue if new cost is smaller
+                        if (newCost < cost[newRow][newCol]) {
+                            cost[newRow][newCol] = newCost;
+                            pq.push({ row: newRow, col: newCol, cost: newCost });
+                        }
+                    }
+                }
+            } // Return the minimum cost to the bottom-right corner
+            return cost[rows - 1][cols - 1].toString();
         }
         
         document.getElementById("solve").onclick = solve;

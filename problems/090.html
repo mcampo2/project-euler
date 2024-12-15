@@ -59,8 +59,56 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
+            answer = countValidCubePairs();
             document.getElementById("solution").textContent = answer;
+        }
+
+        function countValidCubePairs() {
+            const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            const combinations = generateCombinations(digits, 6);
+            let count = 0;
+            for (let i = 0; i < combinations.length; i++) {
+                for (let j = i; j < combinations.length; j++) { // Avoid duplicate pairs
+                    const cube1 = new Set(combinations[i]);
+                    const cube2 = new Set(combinations[j]);
+                    // Add 6 and 9 interchangeably
+                    if (cube1.has(6) || cube1.has(9)) {
+                        cube1.add(6);
+                        cube1.add(9);
+                    } if (cube2.has(6) || cube2.has(9)) {
+                        cube2.add(6);
+                        cube2.add(9);
+                    } if (isValidPair(cube1, cube2)) {
+                        count++;
+                    }
+                }
+            } return count;
+        }
+
+        function generateCombinations(digits, size, start = 0, current = [], combinations = []) {
+            if (current.length === size) {
+                combinations.push(new Set(current));
+                return combinations;
+            } for (let i = start; i < digits.length; i++) {
+                current.push(digits[i]);
+                generateCombinations(digits, size, i + 1, current, combinations);
+                current.pop();
+            } return combinations;
+        }
+
+        function isValidPair(cube1, cube2) {
+            const requiredSquares = [
+                [0, 1], [0, 4], [0, 9], [1, 6], [2, 5],
+                [3, 6], [4, 9], [6, 4], [8, 1]
+            ];
+            for (const [d1, d2] of requiredSquares) {
+                if (!(
+                    (cube1.has(d1) && cube2.has(d2)) || 
+                    (cube1.has(d2) && cube2.has(d1))
+                )) {
+                    return false;
+                }
+            } return true;
         }
         
         document.getElementById("solve").onclick = solve;

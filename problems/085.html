@@ -40,8 +40,37 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = displayResults(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function displayResults(target) {
+            const { closestArea, dimensions, rectCount } = findClosestGrid(target);
+            // console.log(`Closest area: ${closestArea}`);
+            // console.log(`Dimensions: ${dimensions.m} x ${dimensions.n}`);
+            // console.log(`Number of rectangles: ${rectCount}`);
+            return closestArea;
+        }
+
+        function findClosestGrid(target) {
+            let closestDifference = Infinity;
+            let closestArea = 0;
+            let dimensions = { m: 0, n: 0 };
+            for (let m = 1; m <= 2000; m++) {
+                for (let n = 1; n <= 2000; n++) {
+                    const rectCount = countRectangles(m, n);
+                    const difference = Math.abs(target - rectCount);
+                    if (difference < closestDifference) {
+                        closestDifference = difference;
+                        closestArea = m * n;
+                        dimensions = { m, n };
+                    } if (rectCount > target) break;
+                }
+            } return { closestArea, dimensions, rectCount: countRectangles(dimensions.m, dimensions.n) };
+        }
+
+        function countRectangles(m, n) {
+            return (m * (m + 1) * n * (n + 1)) / 4;
         }
 
         document.getElementById("range").addEventListener("keydown",

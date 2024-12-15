@@ -101,10 +101,35 @@
             const file = await fetch('0081_matrix.txt');
             let text = file.ok ? await file.text() : '';
             text = text.split('\n').filter(line => line.length > 0).map(line => line.split(','));
-            answer = 0;
+            answer = minimumPathSum(text);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function minimumPathSum(matrix) {
+            const rows = matrix.length;
+            const cols = matrix[0].length;
+            // Create a 2D array for storing minimum path sums as BigInt
+            const dp = Array.from({ length: rows }, () => Array(cols).fill(0n));
+            // Initialize the top-left corner
+            dp[0][0] = BigInt(matrix[0][0]);
+            // Fill the first row
+            for (let col = 1; col < cols; col++) {
+                dp[0][col] = dp[0][col - 1] + BigInt(matrix[0][col]);
+            } // Fill the first column
+            for (let row = 1; row < rows; row++) {
+                dp[row][0] = dp[row - 1][0] + BigInt(matrix[row][0]);
+            } // Fill the rest of the dp table
+            for (let row = 1; row < rows; row++) {
+                for (let col = 1; col < cols; col++) {
+                    dp[row][col] = BigInt(matrix[row][col]) +
+                        (dp[row - 1][col] < dp[row][col - 1] ? dp[row - 1][col] : dp[row][col - 1]);
+                }
+            } // Return the value at the bottom-right corner
+            return dp[rows - 1][cols - 1].toString(); // Convert BigInt back to a string for display
+        }
+
+
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>

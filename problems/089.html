@@ -63,10 +63,52 @@
             const file = await fetch('0089_roman.txt');
             let text = file.ok ? await file.text() : '';
             text = text.split('\n').filter(line => line.length > 0);
-            answer = 0;
+            answer = calculateSavings(text);
             document.getElementById("solution").textContent = answer;
         }
         
+        function calculateSavings(romanNumerals) {
+            let originalLength = 0;
+            let minimalLength = 0;
+            for (const roman of romanNumerals) {
+                originalLength += roman.length;
+                const value = romanToInt(roman);
+                const minimalRoman = intToRoman(value);
+                minimalLength += minimalRoman.length;
+            } return originalLength - minimalLength;
+        }
+
+        function intToRoman(num) {
+            const romanPairs = [
+                [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
+                [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
+                [10, "X"], [9, "IX"], [5, "V"], [4, "IV"],
+                [1, "I"]
+            ];
+            let roman = "";
+            for (const [value, symbol] of romanPairs) {
+                while (num >= value) {
+                    roman += symbol;
+                    num -= value;
+                }
+            } return roman;
+        }
+
+        function romanToInt(roman) {
+            const romanMap = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+            let value = 0;
+            for (let i = 0; i < roman.length; i++) {
+                const current = romanMap[roman[i]];
+                const next = romanMap[roman[i + 1]];
+                // Subtraction rule: If the next numeral is larger, subtract current from total
+                if (next > current) {
+                    value -= current;
+                } else {
+                    value += current;
+                }
+            } return value;
+        };
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>

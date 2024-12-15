@@ -50,8 +50,30 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = findLeastM(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findLeastM(limit) {
+            let count = 0;
+            let M = 0;
+            while (count <= limit) {
+                M++;
+                for (let ab = 2; ab <= 2 * M; ab++) {
+                    if (isPerfectSquare(M * M + ab * ab)) {
+                        count += Math.min(ab - 1, M) - Math.floor((ab - 1) / 2);
+                    }
+                }
+            } return M;
+        }
+
+        function isPerfectSquare(n) {
+            const sqrt = Math.floor(Math.sqrt(n));
+            return sqrt * sqrt === n;
+        }
+
+        function shortestPath(a, b, c) {
+            return Math.sqrt(a * a + (b + c) * (b + c));
         }
 
         document.getElementById("range").addEventListener("keydown",
