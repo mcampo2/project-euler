@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Sum: Two Ways</title>
+    <style>
+        a {
+            color: saddlebrown;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        body {
+            width: 35rem;
+        }
+
+        div div {
+            align-items: center;
+            display: flex;
+            height: 12rem;
+            justify-content: center;
+            text-align: center;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        .red {
+            color: red;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Path Sum: Two Ways</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>In the 5 by 5 matrix below, the minimal path sum from the top left to
+           the bottom right, by <b>only moving to the right and down</b>, is
+           indicated in bold red and is equal to 2427.</p>
+           <div><div style="font-size: 10rem; padding-bottom: 1.5rem;">(</div>
+               <table>
+                <tr>
+                    <td class="red">131</td>
+                    <td>673</td>
+                    <td>234</td>
+                    <td>103</td>
+                    <td>18</td>
+                </tr>
+                <tr>
+                    <td class="red">201</td>
+                    <td class="red">96</td>
+                    <td class="red">342</td>
+                    <td>965</td>
+                    <td>150</td>
+                </tr>
+                <tr>
+                    <td>630</td>
+                    <td>803</td>
+                    <td class="red">746</td>
+                    <td class="red">422</td>
+                    <td>111</td>
+                </tr>
+                <tr>
+                    <td>537</td>
+                    <td>699</td>
+                    <td>497</td>
+                    <td class="red">121</td>
+                    <td>956</td>
+                </tr>
+                <tr>
+                    <td>805</td>
+                    <td>732</td>
+                    <td>524</td>
+                    <td class="red">37</td>
+                    <td class="red">331</td>
+                </tr>
+            </table>
+        <div style="font-size: 10rem; padding-bottom: 1.5rem;">)</div></div>
+        <p>Find the minimal path sum from the top left to the bottom right by
+           only moving right and down in
+           <a href="0081_matrix.txt">matrix.txt</a> (right click and
+           "Save Link/Target As..."), a 31K text file containing an
+           80 by 80 matrix.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The minimal path sum from the top left to the bottom right by only
+           moving right and down in <a href="0081_matrix.txt">matrix.txt</a>
+           is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        async function solve() {
+            const file = await fetch('0081_matrix.txt');
+            let text = file.ok ? await file.text() : '';
+            text = text.split('\n').filter(line => line.length > 0).map(line => line.split(','));
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

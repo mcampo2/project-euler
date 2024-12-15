@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Rectangles</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div {
+            text-align: center;
+        }
+
+        #range {
+            width: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Counting Rectangles</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>By counting carefully it can be seen that a rectangular grid
+           measuring 3 by 2 contains eighteen rectangles:</p>
+        <div><img src="0085.png"></div>
+        <p>Although there exists no rectangular grid that contains exactly
+           two million rectangles, find the area of the grid with the nearest
+           solution.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The nearest solution to the area of a grid that contains exactly
+           <input id="range" type="text" value="2000000"> rectangles is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

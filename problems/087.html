@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Power Triples</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div {
+            text-align: center;
+        }
+
+        #range {
+            width: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prime Power Triples</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The smallest number expressible as the sum of a prime square, prime
+           cube, and prime fourth power is 28. In fact, there are exactly four
+           numbers below fifty that can be expressed in such a way:</p>
+        <div>
+            28 = 2<sup>2</sup> + 2<sup>3</sup> + 2<sup>4</sup><br>
+            33 = 3<sup>2</sup> + 2<sup>3</sup> + 2<sup>4</sup><br>
+            49 = 5<sup>2</sup> + 2<sup>3</sup> + 2<sup>4</sup><br>
+            47 = 2<sup>2</sup> + 3<sup>3</sup> + 2<sup>4</sup>
+        </div>
+        <p>How many numbers below fifty million can be expressed as the sum of
+           a prime square, prime cube, and prime fourth power?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The count of numbers below
+           <input id="range" type="text" value="50000000"> that can be
+           expressed as the sum of a prime square, prime cube, and prime fourth
+           power is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
