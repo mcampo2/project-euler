@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almost Equilateral Triangles</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div table {
+            margin-left: 2rem;
+        }
+
+        #range {
+            width: 5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Almost Equilateral Triangles</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>It is easily proved that no equilateral triangle exists with
+           integral length sides and integral area. However, the <i>almost
+           equilateral triangle</i> 5-5-6 has an area of 12 square units.</p>
+        <p>We shall define an <i>almost equilateral triangle</i> to be a
+           triangle for which two sides are equal and the third differs by no
+           more than one unit.</p>
+        <p>Find the sum of the perimeters of all <i>almost equilateral
+           triangles</i> with integral side lengths and area and whose
+           perimeters do not exceed one billion (1 000 000 000).</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>the sum of the perimeters of all almost equilateral triangles with
+           integral side lengths and area and whose perimeters do not exceed
+           <input id="range" type="text" value="1000000000"> is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

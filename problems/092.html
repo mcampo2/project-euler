@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Digit Chains</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+
+        div div {
+            display: flex;
+            justify-content: center;
+        }
+
+        #range {
+            width: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Square Digit Chains</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>A number chain is created by continuously adding the square
+           of the digits in a number to form a new number until it has
+           been seen before.</p>
+        <p>For example,</p>
+        <div><p>44 → 32 → 13 → 10 → <b>1</b> → <b>1</b><br> 85 →
+             <b>89</b> → 145 → 42 → 20 → 4 → 16 → 37 → 58 → <b>89</b></p></div>
+        <p>Therefore any chain that arrives at 1 or 89 will become stuck
+           in an endless loop. What is most amazing is that EVERY starting
+           number will eventually arrive at 1 or 89.</p>
+        <p>How many starting numbers below ten million will arrive at 89?</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The number of starting numbers below
+           <input id="range" type="text" value="10000000"> that will create
+           a number chain that arrives at 89 is
+           <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            range = Math.abs(document.getElementById("range").value);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+
+        document.getElementById("range").addEventListener("keydown",
+            function(event) {
+                if (event.key === "Enter") {
+                    document.getElementById("solve").focus();
+                    solve();
+                }
+            }
+        );
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

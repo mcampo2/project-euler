@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Largest Exponential</title>
+    <style>
+        a {
+            color: saddlebrown;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        body {
+            width: 35rem;
+        }
+
+        #range {
+            width: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Largest Exponential</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>Comparing two numbers written in index form like  2<sup>11</sup>
+           and 3<sup>7</sup> is not difficult, as any calculator would confirm
+           that 2<sup>11</sup> = 2048 < 3<sup>7</sup> = 2187.</p>
+        <p>However, confirming that 632382<sup>518061</sup> >
+           519432<sup>525806</sup> would be much more difficult, as both
+           numbers contain over three million digits.</p>
+        <p>Using <a href="0099_base_exp.txt">base_exp.txt</a> (right click and
+           'Save Link/Target As...'), a 22K text file containing one thousand
+           lines with a base/exponent pair on each line, determine which line
+           number has the greatest numerical value.</p>
+        <p>NOTE: The first two lines in the file represent the numbers in the
+           example given above.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The line number in <a href="0099_base_exp.txt">base_exp.txt</a>
+            with the greatest numerical value is
+            <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        async function solve() {
+            const file = await fetch('0099_base_exp.txt');
+            let text = file.ok ? await file.text() : '';
+            text = text.split('\n').map(line => line.split(','));
+            console.log(text);
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Large Non-Mersenne Prime</title>
+    <style>
+        body {
+            width: 35rem;
+        }
+        #range {
+            width: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Large Non-Mersenne Prime</h1>
+    <div>
+        <h2>Problem</h2>
+        <p>The first known prime found to exceed one million digits was
+           discovered in 1999, and is a Mersenne prime of the form
+           2<sup>6972593</sup> - 1; it cointains exactly 2098960 digits.
+           Subsequently other Mersenne primes, of the form 2<sup><i>p</i></sup>
+           - 1, have been found which contain more digits.</p>
+        <p>However, in 2004 there was found a massive non-Mersenne prime which
+           contains 2357207 digits: 28433 × 2<sup>7830457</sup> + 1.</p>
+        <p>Find the last ten digits of this prime number.</p>
+    </div>
+    <div>
+        <h2>Solution</h2>
+        <p>The last ten digits of 28433 × 2<sup>7830457</sup> + 1
+           is <b><span id="solution">???</span></b>.</p>
+        <button id="solve">Solve</button>
+    </div>
+    <script>
+        function solve() {
+            answer = 0;
+            document.getElementById("solution").textContent = answer;
+        }
+        
+        document.getElementById("solve").onclick = solve;
+    </script>
+</body>
+</html>
