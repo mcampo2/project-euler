@@ -50,8 +50,44 @@
         function solve() {
             range1 = Math.abs(document.getElementById("range_1").value);
             range2 = Math.abs(document.getElementById("range_2").value);
-            answer = 0;
+            answer = countRightTriangles(range1, range2);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function countRightTriangles(start, n) {
+            // Count triangles with the right angle at a point on an axis.
+            // For this grid, these contribute 3*n^2 triangles.
+            let count = 3 * n * n;
+            // Now, count triangles with the right angle at an interior point (x,y) where x>0 and y>0.
+            for (let x = start+1; x <= n; x++) {
+                for (let y = start+1; y <= n; y++) {
+                    // For point (x,y), get the greatest common divisor.
+                    const d = gcd(x, y);
+                    // The primitive step for moving along the line perpendicular to (x,y)
+                    // is given by (y/d, x/d). (Note: One perpendicular is (y, -x); the sign is adjusted later.)
+                    const stepX = y / d;
+                    const stepY = x / d;
+                    // Count how many steps you can take in one direction.
+                    // When moving in the (stepX, -stepY) direction:
+                    //   - x must remain >= 0:  x - k*stepX >= 0  ⟹  k <= x/stepX
+                    //   - y must remain <= n:  y + k*stepY <= n  ⟹  k <= (n - y)/stepY
+                    const moves1 = Math.min(Math.floor(x / stepX), Math.floor((n - y) / stepY));
+                    // Count steps in the opposite direction.
+                    // When moving in the (-stepX, stepY) direction:
+                    //   - x must remain <= n:  x + k*stepX <= n  ⟹  k <= (n - x)/stepX
+                    //   - y must remain >= 0:  y - k*stepY >= 0  ⟹  k <= y/stepY
+                    const moves2 = Math.min(Math.floor((n - x) / stepX), Math.floor(y / stepY));
+                    count += moves1 + moves2;
+                }
+            } return count;
+        }
+
+        function gcd(a, b) {
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            } return a;
         }
 
         document.getElementById("range_1").addEventListener("keydown",

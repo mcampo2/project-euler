@@ -50,9 +50,26 @@
             const file = await fetch('0099_base_exp.txt');
             let text = file.ok ? await file.text() : '';
             text = text.split('\n').map(line => line.split(','));
-            console.log(text);
-            answer = 0;
+            answer = largestExponential(text);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function largestExponential(pairs) {
+            // We'll now iterate through each pair and compute b * Math.log(a)
+            let maxLineNumber = 0;      // line with the greatest a^b (1-indexed)
+            let maxLogValue = -Infinity; // holds the maximum b*log(a)
+            for (let i = 0; i < pairs.length; i++) {
+                // Convert the strings to numbers.
+                const base = Number(pairs[i][0]);
+                const exponent = Number(pairs[i][1]);
+                // Calculate the logarithmic value: exponent * ln(base)
+                const logValue = exponent * Math.log(base);
+                // If this is greater than our current max, update our records.
+                if (logValue > maxLogValue) {
+                    maxLogValue = logValue;
+                    maxLineNumber = i + 1; // Adding 1 because line numbers start at 1.
+                }
+            } return maxLineNumber;
         }
         
         document.getElementById("solve").onclick = solve;

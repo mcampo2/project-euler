@@ -40,8 +40,32 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = arrangedProbability(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function arrangedProbability(threshold) {
+            // We work with (X, Y) corresponding to (x, y) = (2b-1, 2n-1)
+            // The trivial solution is (1, 1) which gives b = n = 1.
+            // We want the first nontrivial solution, so we iterate.
+            let X = 1n;
+            let Y = 1n;
+            let b, n;
+            // Use the recurrence derived from multiplying by (3 + 2√2):
+            // X_new = 2Y + 3X
+            // Y_new = 3Y + 4X
+            // Then recover:
+            // b = (X + 1) / 2,   n = (Y + 1) / 2.
+            while (true) {
+                let X_next = 2n * Y + 3n * X;
+                let Y_next = 3n * Y + 4n * X;
+                X = X_next;
+                Y = Y_next;
+                // Compute blue discs b and total discs n from (X, Y)
+                b = (X + 1n) / 2n;
+                n = (Y + 1n) / 2n;
+                if (n > threshold) break;
+            } return b;
         }
 
         document.getElementById("range").addEventListener("keydown",

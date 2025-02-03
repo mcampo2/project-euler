@@ -35,10 +35,28 @@
     </div>
     <script>
         function solve() {
-            answer = 0;
+            answer = mesner();
             document.getElementById("solution").textContent = answer;
         }
+
+        function mesner() {
+            let mod = 10000000000n;
+            let exponent = 7830457n;
+            let multiplier = 28433n;
+            let powerTerm = modExp(2n, exponent, mod);
+            return answer = (multiplier * powerTerm + 1n) % mod;
+        }
         
+        function modExp(base, exponent, modulus) {
+            let result = 1n;
+            base = base % modulus;
+            while (exponent > 0n) {
+                if (exponent % 2n === 1n) result = (result * base) % modulus;
+                base = (base * base) % modulus;
+                exponent = exponent / 2n;
+            } return result;
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>

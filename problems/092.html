@@ -46,8 +46,45 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = squareDigitChains(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function squareDigitChains(limit) {
+            let count = 0;
+            // Iterate through every starting number from 1 up to limit-1.
+            for (let i = 1; i < limit; i++) {
+                if (chainEndpoint(i) === 89) {
+                count++;
+                }
+            } return count;
+        }
+
+        function chainEndpoint(n) {
+            const chain = [];
+            while (memo[n] === undefined) {
+                chain.push(n);
+                n = sumSquareDigits(n);
+            }
+            // Once we hit a number with a known outcome, assign that outcome to all numbers in the chain.
+            const endpoint = memo[n];
+            for (const num of chain) {
+                memo[num] = endpoint;
+            } return endpoint;
+        }
+
+        const memo = {
+            1: 1,
+            89: 89,
+        };
+
+        function sumSquareDigits(n) {
+            let sum = 0;
+            while (n > 0) {
+                let digit = n % 10;
+                sum += digit * digit;
+                n = Math.floor(n / 10);
+            } return sum;
         }
 
         document.getElementById("range").addEventListener("keydown",

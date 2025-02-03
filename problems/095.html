@@ -49,8 +49,59 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = findSmallestMemberOfLongestAmicableChain(range);
             document.getElementById("solution").textContent = answer;
+        }
+
+        function findSmallestMemberOfLongestAmicableChain(limit) {
+            // Create an array to hold the sum of proper divisors for every number from 0 to limit.
+            // For n >= 2, we initialize with 1 because 1 is a proper divisor of every n > 1.
+            const sumDiv = new Array(limit + 1).fill(1);
+            sumDiv[0] = 0; // not used
+            sumDiv[1] = 0; // proper divisors of 1: none
+            // Use a sieve–style approach:
+            // For every i from 2 up to limit/2, add i as a divisor to multiples of i.
+            for (let i = 2; i <= Math.floor(limit / 2); i++) {
+                for (let j = i * 2; j <= limit; j += i) sumDiv[j] += i;
+            } // Variables to track the best (longest) amicable chain.
+            let bestChainLength = 0;
+            let bestChainMin = null;
+            // bestChainChain is kept in case you want to inspect the full chain.
+            let bestChainChain = [];
+            // For every starting number from 2 to limit, generate the chain.
+            for (let i = 2; i <= limit; i++) {
+                let chain = [];
+                // Use a Map (or plain object) to record numbers already seen in the current chain.
+                // The value is the index at which the number was first encountered.
+                const seen = Object.create(null);
+                let current = i;
+                while (true) {
+                    // If current is outside valid range, the chain is invalid.
+                    if (current < 1 || current > limit) break;
+                    // If current already appears in the chain, a cycle is found.
+                    if (seen[current] !== undefined) {
+                        // The cycle consists of the portion of the chain starting from the first occurrence.
+                        const cycle = chain.slice(seen[current]);
+                        // Update the best chain if this cycle is longer.
+                        if (cycle.length > bestChainLength) {
+                            bestChainLength = cycle.length;
+                            bestChainMin = Math.min(...cycle);
+                            bestChainChain = cycle;
+                        } else if (cycle.length === bestChainLength) {
+                            // If the cycle length is equal to the best found, use the one with the smallest minimum member.
+                            const cycleMin = Math.min(...cycle);
+                            if (bestChainMin === null || cycleMin < bestChainMin) {
+                                bestChainMin = cycleMin;
+                                bestChainChain = cycle;
+                            }
+                        } break;
+                    } // Record the current number and add it to the chain.
+                    seen[current] = chain.length;
+                    chain.push(current);
+                    // Compute the next number in the chain.
+                    current = sumDiv[current];
+                }
+            } return bestChainMin;
         }
 
         document.getElementById("range").addEventListener("keydown",

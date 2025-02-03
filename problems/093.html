@@ -66,19 +66,151 @@
     <script>
         function solve() {
             range = Math.abs(document.getElementById("range").value);
-            answer = 0;
+            answer = consecutivePositiveIntegers(range);
             document.getElementById("solution").textContent = answer;
         }
 
+        function consecutivePositiveIntegers(n) {
+            const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            const combinations = getCombinations(digits, n);
+            let bestChainLength = 0;
+            let bestCombo = [];
+            // Iterate over every 4-digit combination.
+            for (const combo of combinations) {
+                let results = new Set();
+                const perms = getPermutations(combo);
+                // Try every permutation of the 4 digits.
+                for (const perm of perms) {
+                    const [a, b, c, d] = perm;
+                    // Try every combination of operators.
+                    for (let i = 0; i < ops.length; i++) {
+                        for (let j = 0; j < ops.length; j++) {
+                            for (let k = 0; k < ops.length; k++) {
+                                const op1 = ops[i], op2 = ops[j], op3 = ops[k];
+                                // Form 1: ((a op1 b) op2 c) op3 d
+                                let r1 = op1(a, b);
+                                if (r1 !== null) {
+                                    let r2 = op2(r1, c);
+                                    if (r2 !== null) {
+                                        let r3 = op3(r2, d);
+                                        if (r3 !== null && isPositiveInteger(r3)) {
+                                            results.add(Math.round(r3));
+                                        }
+                                    }
+                                }
+                                // Form 2: (a op1 (b op2 c)) op3 d
+                                let r1b = op2(b, c);
+                                if (r1b !== null) {
+                                    let r2b = op1(a, r1b);
+                                    if (r2b !== null) {
+                                        let r3b = op3(r2b, d);
+                                        if (r3b !== null && isPositiveInteger(r3b)) {
+                                            results.add(Math.round(r3b));
+                                        }
+                                    }
+                                }
+                                // Form 3: (a op1 b) op2 (c op3 d)
+                                let r1c = op1(a, b);
+                                let r2c = op3(c, d);
+                                if (r1c !== null && r2c !== null) {
+                                    let r3c = op2(r1c, r2c);
+                                    if (r3c !== null && isPositiveInteger(r3c)) {
+                                        results.add(Math.round(r3c));
+                                    }
+                                }
+                                // Form 4: a op1 ((b op2 c) op3 d)
+                                let r1d = op2(b, c);
+                                if (r1d !== null) {
+                                    let r2d = op3(r1d, d);
+                                    if (r2d !== null) {
+                                        let r3d = op1(a, r2d);
+                                        if (r3d !== null && isPositiveInteger(r3d)) {
+                                            results.add(Math.round(r3d));
+                                        }
+                                    }
+                                }
+                                // Form 5: a op1 (b op2 (c op3 d))
+                                let r1e = op3(c, d);
+                                if (r1e !== null) {
+                                    let r2e = op2(b, r1e);
+                                    if (r2e !== null) {
+                                        let r3e = op1(a, r2e);
+                                        if (r3e !== null && isPositiveInteger(r3e)) {
+                                            results.add(Math.round(r3e));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } // End of permutation loop
+                // Determine the length of the consecutive chain starting at 1.
+                let n = 1;
+                while (results.has(n)) n++;
+                let chainLength = n - 1;
+                if (chainLength > bestChainLength) {
+                    bestChainLength = chainLength;
+                    // Make sure to record the digits in ascending order.
+                    bestCombo = combo.slice().sort((a, b) => a - b);
+                }
+            } // End of combinations loop
+            return bestCombo.join('');
+        }
+
+        function getCombinations(arr, k) {
+            let results = [];
+            function combine(start, combo) {
+                if (combo.length === k) {
+                    results.push(combo.slice());
+                    return;
+                } for (let i = start; i < arr.length; i++) {
+                    combo.push(arr[i]);
+                    combine(i + 1, combo);
+                    combo.pop();
+                }
+            } combine(0, []);
+            return results;
+        }
+
+        // Helper: generate all permutations of an array.
+        function getPermutations(arr) {
+            let results = [];
+            function permute(a, l, r) {
+                if (l === r) {
+                    results.push(a.slice());
+                } else {
+                    for (let i = l; i <= r; i++) {
+                        [a[l], a[i]] = [a[i], a[l]];
+                        permute(a, l + 1, r);
+                        [a[l], a[i]] = [a[i], a[l]];
+                    }
+                }
+            } permute(arr.slice(), 0, arr.length - 1);
+            return results;
+        }
+
+        // Operator functions. For division, return null if dividing by zero.
+        const ops = [
+            function (a, b) { return a + b; },
+            function (a, b) { return a - b; },
+            function (a, b) { return a * b; },
+            function (a, b) { return (b === 0 ? null : a / b); }
+        ];
+
+        // Helper: check if a number is a positive integer (allowing for floating–point imprecision).
+        function isPositiveInteger(n) {
+            return n > 0 && Math.abs(n - Math.round(n)) < 1e-9;
+        }
+
         document.getElementById("range").addEventListener("keydown",
-            function(event) {
+            function (event) {
                 if (event.key === "Enter") {
                     document.getElementById("solve").focus();
                     solve();
                 }
             }
         );
-        
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>

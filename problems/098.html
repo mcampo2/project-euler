@@ -53,10 +53,92 @@
             const file = await fetch('0098_words.txt');
             let text = file.ok ? await file.text() : '';
             text = text.split(',').map(str => str.replace(/"/g, ''));
-            answer = 0;
+            answer = findLargestSquareFromAnagramMappings(text);
             document.getElementById("solution").textContent = answer;
         }
-        
+
+        function findLargestSquareFromAnagramMappings(words) {
+            var maxSquare = 0;
+            var anagramGroups = groupWordsByAnagram(words);
+            for (var i = 0; i < anagramGroups.length; i++) {
+                var group = anagramGroups[i];
+                var L = group[0].length;
+                var squaresData = getSquaresForLength(L);
+                var squares = squaresData.squares;
+                var squareSet = squaresData.squareSet;
+                for (var j = 0; j < group.length; j++) {
+                    for (var k = 0; k < group.length; k++) {
+                        if (j === k) continue;
+                        var word1 = group[j];
+                        var word2 = group[k];
+                        for (var s = 0; s < squares.length; s++) {
+                            var sqStr = squares[s];
+                            var candidate = tryMapping(word1, word2, sqStr);
+                            if (candidate !== null && squareSet.has(candidate)) {
+                                var candidateNum = parseInt(candidate, 10);
+                                var sqNum = parseInt(sqStr, 10);
+                                if (candidateNum > maxSquare) maxSquare = candidateNum;
+                                if (sqNum > maxSquare) maxSquare = sqNum;
+                            }
+                        }
+                    }
+                }
+            } return maxSquare;
+        }
+
+        function groupWordsByAnagram(words) {
+            var groups = {};
+            for (var i = 0; i < words.length; i++) {
+                var word = words[i];
+                var key = word.split('').sort().join('');
+                if (groups[key] === undefined) groups[key] = [];
+                groups[key].push(word);
+            } var result = [];
+            for (var key in groups) {
+                if (groups[key].length > 1) result.push(groups[key]);
+            } return result;
+        }
+
+        function getSquaresForLength(L) {
+            var squares = [];
+            var squareSet = new Set();
+            var lower = Math.ceil(Math.sqrt(Math.pow(10, L - 1)));
+            var upper = Math.floor(Math.sqrt(Math.pow(10, L) - 1));
+            for (var i = lower; i <= upper; i++) {
+                var sq = i * i;
+                var sqStr = sq.toString();
+                if (sqStr.length === L) {
+                    squares.push(sqStr);
+                    squareSet.add(sqStr);
+                }
+            } return { squares: squares, squareSet: squareSet };
+        }
+
+        function tryMapping(word1, word2, squareStr) {
+            var mapping = {};
+            var usedDigits = {};
+            // Build mapping from word1's letters to the digits of squareStr.
+            for (var k = 0; k < word1.length; k++) {
+                var letter = word1[k];
+                var digit = squareStr[k];
+                if (mapping[letter] === undefined) {
+                    if (usedDigits[digit]) return null;
+                    mapping[letter] = digit;
+                    usedDigits[digit] = true;
+                } else if (mapping[letter] !== digit) return null;
+            } // The mapping for word1 must not assign '0' to its first letter.
+            if (mapping[word1[0]] === '0') return null;
+            // Apply the mapping to word2.
+            var candidate = "";
+            for (var k = 0; k < word2.length; k++) {
+                var letter = word2[k];
+                if (mapping[letter] === undefined) return null;
+                candidate += mapping[letter];
+            } // Also, word2's candidate number must not start with '0'.
+            if (candidate[0] === '0') return null;
+            return candidate;
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>

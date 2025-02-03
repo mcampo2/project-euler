@@ -66,11 +66,92 @@
         <button id="solve">Solve</button>
     </div>
     <script>
-        function solve() {
-            answer = 0;
+        async function solve() {
+            const file = await fetch('p096_sudoku.txt');
+            let text = file.ok ? await file.text() : '';
+            text = text.split(/\r?\n/);
+            answer = sudokuSum(text);
             document.getElementById("solution").textContent = answer;
         }
+
+        function sudokuSum(text) {
+            // Parse the input into an array of puzzles.
+            const puzzles = parseSudokuInput(text);
+            let totalSum = 0;
+            // Process each puzzle.
+            for (let puzzle of puzzles) {
+                if (!solveSudoku(puzzle)) {
+                    console.error("A puzzle could not be solved!");
+                    continue;
+                } // Extract the top-left three-digit number (digits at positions [0][0], [0][1], [0][2]).
+                const topLeftNumber = puzzle[0][0] * 100 + puzzle[0][1] * 10 + puzzle[0][2];
+                totalSum += topLeftNumber;
+            } return totalSum;
+        }
+
+        function solveSudoku(grid) {
+            const emptyPos = findEmpty(grid);
+            if (emptyPos === null) {
+                return true; // Puzzle solved.
+            } const row = emptyPos[0];
+            const col = emptyPos[1];
+            for (let num = 1; num <= 9; num++) {
+                if (isValidMove(grid, row, col, num)) {
+                    grid[row][col] = num;
+                    if (solveSudoku(grid)) {
+                        return true;
+                    } grid[row][col] = 0; // Backtrack.
+                }
+            } return false;
+        }
         
+        function parseSudokuInput(input) {
+            const puzzles = [];
+            let currentGrid = [];
+            for (let line of input) {
+                line = line.trim();
+                if (line.length === 0) continue;
+                // Lines starting with "Grid" mark the beginning of a new puzzle.
+                if (line.startsWith("Grid")) {
+                    if (currentGrid.length > 0) {
+                        puzzles.push(currentGrid);
+                        currentGrid = [];
+                    }
+                } else {
+                    // Each row is a string of 9 digits.
+                    const row = line.split("").map(ch => parseInt(ch, 10));
+                    currentGrid.push(row);
+                }
+            } if (currentGrid.length > 0) puzzles.push(currentGrid);
+            return puzzles;
+        }
+
+        function findEmpty(grid) {
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (grid[r][c] === 0) {
+                        return [r, c];
+                    }
+                }
+            } return null;
+        }
+
+        function isValidMove(grid, row, col, num) {
+            // Check the row and column.
+            for (let i = 0; i < 9; i++) {
+                if (grid[row][i] === num) return false;
+                if (grid[i][col] === num) return false;
+            }
+            // Check the 3×3 subgrid.
+            const boxRow = Math.floor(row / 3) * 3;
+            const boxCol = Math.floor(col / 3) * 3;
+            for (let r = 0; r < 3; r++) {
+                for (let c = 0; c < 3; c++) {
+                    if (grid[boxRow + r][boxCol + c] === num) return false;
+                }
+            } return true;
+        }
+
         document.getElementById("solve").onclick = solve;
     </script>
 </body>
